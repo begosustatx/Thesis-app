@@ -4,6 +4,9 @@ from text_processor import sentence_processor, word_processor
 from sound_processor import play_sound
 app = Flask(__name__)
 
+# export FLASK_APP=api
+# flask run
+
 
 @app.route('/sentence')
 def sentence():
