@@ -1,0 +1,121 @@
+resource,duration,rms_scaled,structure
+v-09-09-8-11,700,134.1,short note rhythm
+v-09-09-8-20,7300,138.5,short note rhythm
+v-09-09-8-24,13400,363.2,long note rhythm
+v-09-10-11-55,5600,253.4,long note rhythm
+v-09-10-11-58,9300,462,long note rhythm
+v-09-10-12-11,6500,378.4,short note rhythm
+v-09-10-12-13,3500,269.8,short note rhythm
+v-09-10-12-16,3150,245.8,short note rhythm
+v-09-10-12-2,2900,356.7,medium note rhythm
+v-09-10-12-6,9000,296.4,long note rhythm
+v-09-10-12-9,4700,358.5,short note rhythm
+v-09-10-3-52,700,434.9,short note rhythm
+v-09-10-3-56,900,408.3,short note rhythm
+v-09-10-4-2,920,209.3,short note rhythm
+v-09-10-4-20,3550,122.7,short note rhythm
+v-09-10-4-23,3300,123,short note rhythm
+v-09-10-4-25,5400,203.1,short note rhythm
+v-09-10-4-6,1130,166,short note rhythm
+v-09-10-6-16,1400,318.7,short note rhythm
+v-09-10-6-22,1050,335.2,short note rhythm
+v-09-10-6-27,1120,318.7,short note rhythm
+v-09-10-6-38,1000,707,constant
+v-09-10-6-43,1070,500.1,short note rhythm
+v-09-10-6-46,1000,194.9,long note rhythm
+v-09-10-6-5,1500,444.2,short note rhythm
+v-09-10-6-59,1160,1053.2,constant
+v-09-10-7-34,950,134.2,short note rhythm
+v-09-10-7-36,650,669.1,constant
+v-09-10-7-9,1040,151.2,short note rhythm
+v-09-10-8-5,1200,154.3,short note rhythm
+v-09-10-8-7,800,152.5,short note rhythm
+v-09-11-3-12,2000,707.1,short note rhythm
+v-09-11-3-16,2000,707.1,varied rhythm
+v-09-11-3-19,2000,708.2,varied rhythm
+v-09-11-3-21,1500,501.5,short note rhythm
+v-09-11-3-24,2000,577.3,varied rhythm
+v-09-11-3-4,1500,577.3,short note rhythm
+v-09-11-3-43,2000,577.3,varied rhythm
+v-09-11-3-50,1750,288.7,short note rhythm
+v-09-11-3-54,1380,204.1,short note rhythm
+v-09-11-3-56,1870,288.8,short note rhythm
+v-09-11-3-8,1060,318.8,medium note rhythm
+v-09-11-4-1,2000,408.3,short note rhythm
+v-09-11-4-12,1000,731.5,constant
+v-09-11-4-22,1000,732.2,constant
+v-09-11-4-3,2000,408.3,short note rhythm
+v-09-11-4-41,5000,541.1,short note rhythm
+v-09-11-4-54,1050,303.8,short note rhythm
+v-09-11-4-8,1800,288.7,short note rhythm
+v-09-12-1-0,960,350.6,short note rhythm
+v-09-12-1-19,750,157.6,short note rhythm
+v-09-12-1-23,500,151.1,constant
+v-09-12-1-29,400,150.6,short note rhythm
+v-09-12-1-39,1550,109,constant
+v-09-12-1-48,1210,154.3,short note rhythm
+v-09-12-1-53,1050,405.7,short note rhythm
+v-09-12-2-17,1000,147,short note rhythm
+v-09-12-2-20,900,131.4,short note rhythm
+v-09-12-2-23,2050,661.3,long note rhythm
+v-09-12-2-40,3050,71.6,short note rhythm
+v-09-12-8-10,4600,288.7,constant
+v-09-12-8-13,1800,197.1,constant
+v-09-12-8-21,115,483.9,constant
+v-09-12-8-27,200,707.1,constant
+v-09-12-8-30,125,704.9,constant
+v-09-12-8-32,750,623.6,long note rhythm
+v-09-16-1-43,300,141.3,constant
+v-09-16-1-56,1350,184.3,long note rhythm
+v-09-18-1-55,2500,65.5,short note rhythm
+v-09-18-2-7,1250,286,varied rhythm
+v-09-18-4-12,2700,250.3,short note rhythm
+v-09-18-4-15,750,292.6,short note rhythm
+v-09-18-4-16,250,175.1,short note rhythm
+v-09-18-4-18,2200,192.6,short note rhythm
+v-09-18-4-22,14500,395.9,varied rhythm
+v-09-18-4-56,6100,249.8,long note rhythm
+v-09-23-6-24,1800,235.7,long note rhythm
+v-09-26-1-39,3400,382.2,varied rhythm
+v-10-09-01-01,1010,283.4,short note rhythm
+v-10-09-01-08,4180,288,long note rhythm
+v-10-09-01-11,1840,262.9,varied rhythm
+v-10-09-01-12,1350,437.8,varied rhythm
+v-10-09-01-14,3300,409.6,varied rhythm
+v-10-09-01-16,3250,260.3,long note rhythm
+v-10-09-01-20,5800,327.2,long note rhythm
+v-10-09-05-00,1010,464.2,short note rhythm
+v-10-09-05-02,880,328.3,short note rhythm
+v-10-09-05-04,1010,612.4,medium note rhythm
+v-10-09-05-07,1020,518.4,short note rhythm
+v-10-10-01-05,2600,618,long note rhythm
+v-10-10-01-10,4000,612.7,long note rhythm
+v-10-10-01-18,1450,420.3,short note rhythm
+v-10-10-01-21,1005,684.4,medium note rhythm
+v-10-18-11-11,1005,684.4,medium note rhythm
+v-10-21-2-48,1240,348.7,medium note rhythm
+v-10-21-3-11,627,422.1,varied rhythm
+v-10-21-3-17,1050,480.2,varied rhythm
+v-10-21-3-2,486,438.8,varied rhythm
+v-10-21-3-21,530,282.6,constant
+v-10-21-3-30,485,292.6,constant
+v-10-21-3-33,183,195,short note rhythm
+v-10-21-3-39,261,587.1,short note rhythm
+v-10-21-3-4,525,384.7,short note rhythm
+v-10-21-3-45,1500,520.5,short note rhythm
+v-10-21-3-7,522,672.1,varied rhythm
+v-10-23-1-10,2325,,medium note rhythm
+v-10-23-1-16,1027,,short note rhythm
+v-10-23-1-21,1240,348.7,medium note rhythm
+v-10-23-1-23,1240,348.7,medium note rhythm
+v-10-23-1-24,1240,,medium note rhythm
+v-10-28-7-22,3188,,varied rhythm
+v-10-28-7-23,2888,213.2,varied rhythm
+v-10-28-7-26,4400,334.8,short note rhythm
+v-10-28-7-29,3978,396.2,varied rhythm
+v-10-28-7-31,5168,,short note rhythm
+v-10-28-7-33,2486,267.4,short note rhythm
+v-10-28-7-35,2346,340.5,constant
+v-10-28-7-36,2348,,constant
+v-10-29-4-20,15764,560.3,long note rhythm
+v-10-29-4-22,2079,415.7,constant
