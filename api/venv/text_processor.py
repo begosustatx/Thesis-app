@@ -92,7 +92,7 @@ def set_punctuation(sentence):
     elif punctuation == '.':
         number_value = 1
     return(number_value)
-
+    """
 
 def extract_sentences(array):
     for i in range(len(array)):
@@ -102,7 +102,22 @@ def extract_sentences(array):
         for sentence in sentence_array:
             array.insert(i, sentence)
     return array
+    """
 
+
+def extract_sentences(sentence):
+    sentence_array = create_sentence_array(sentence)
+    return sentence_array
+
+
+def create_word_array(text):
+    res = []
+    array = nltk.word_tokenize(text)
+    for a in array:
+        res.append(a)
+    return(res)
+
+    """
 
 def create_word_array(text):
     res = []
@@ -111,6 +126,7 @@ def create_word_array(text):
         for a in array:
             res.append(a)
     return(res)
+    """
 
 # words with a newutral classification are dismissed
 
@@ -152,14 +168,16 @@ def get_adjectives(array):
 
 
 def word_processor(file_path):
-    strips = open_file(file_path)
-    word_array = create_word_array(strips)
+    # strips = open_file(file_path)
+    word_array = create_word_array(file_path)
     (indexes, effects) = get_adjectives(word_array)
-    return ({"words": word_array, "indexes": indexes, "effects": effects})
+    return (word_array, indexes, effects)
 
 
 def sentence_processor(file_path):
-    strips = open_file(file_path)
-    sentence_array = extract_sentences(strips)
+    # strips = open_file(file_path)
+    # sentence_array = extract_sentences(strips)
+    sentence_array = extract_sentences(file_path)
     effects = map_intonation(sentence_array)
-    return ({"sentences": sentence_array, 'effects': effects})
+    return ((sentence_array, effects))
+    # return ({"sentences": sentence_array, 'effects': effects})

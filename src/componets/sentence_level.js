@@ -1,19 +1,19 @@
 import React from 'react';
 import { useEffect, useState } from 'react'
 
-export default function Example() {
+export default function Example({ object }) {
 
     const [words, setWords] = useState([])
     const [indexes, setIndexeses] = useState([])
     const [effects, setEffects] = useState([])
+    const [objects, setObject] = useState([])
 
     useEffect(() => {
-        fetch('/word').then(res => res.json()).then(data => {
-            console.log(data)
-            setWords(data.words)
-            setIndexeses(data.indexes)
-            setEffects(data.effects);
-        });
+        postData('/sentence', { value: object })
+            .then(data => {
+                console.log(data);
+                setObject(data.html_object)
+            });
     }, []);
 
     async function postData(url = '', data = {}) {
@@ -45,17 +45,15 @@ export default function Example() {
     }
 
     return (
-        <div>
+        <div className="ml-10">
             {<div>
-                {words.map((word, index) =>
-                    indexes.some(item => index === item) ?
-                        <span className="text-red-600"
-                            onMouseEnter={() => play_sound(index)}
-                            onMouseLeave={() => console.log("out")}
-                        > {word + ' '}</span>
-                        :
-                        word + ' '
-                )
+                {objects.map((object, i) =>
+                    object.sentences.map((sentence, index) =>
+                        object.type === "title" ?
+                            <h1 key={i.toString() + index.toString()} className="text-red-600" className="text-7xl">{sentence}</h1>
+                            :
+                            <p key={i.toString() + index.toString()} className="text-3xl">{sentence}</p>
+                    ))
                 }
             </div>}
         </div >
