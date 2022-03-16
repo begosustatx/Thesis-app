@@ -31,4 +31,5 @@ def process_text():
 @app.route('/play', methods=["POST"])
 def play():
     value = request.json['value']
-    return play_sound(value)
+    play_sound(value)
+    return {"OK": 200}
