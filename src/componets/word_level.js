@@ -36,6 +36,20 @@ export default function Example() {
                 </button>
             )
         }
+        if (node.type === "tag" && node.name === "b") {
+            return (
+                <b
+                    onMouseOver={() => play_sound("1")}
+                    onMouseLeave={() => console.log("out")}
+                > {node.children[0].data}</b>)
+        }
+        if (node.type === "tag" && node.name === "i") {
+            return (
+                <i
+                    onMouseOver={() => play_sound("1")}
+                    onMouseLeave={() => console.log("out")}
+                > {node.children[0].data}</i>)
+        }
     }
 
 
@@ -68,9 +82,10 @@ export default function Example() {
     }
 
     return (
-        <div className="ml-10 text-4xl tracking-wide leading-relaxed">
-            <div >{ReactHtmlParser(html, options)}</div>
+        <div className="w-2/4 h-96	mx-auto mt-56 ">
+            <div className="ml-10 text-4xl tracking-wide leading-relaxed">
+                <div >{ReactHtmlParser(html, options)}</div>
+            </div >
         </div >
-
     )
 }

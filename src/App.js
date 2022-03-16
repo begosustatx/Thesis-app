@@ -2,15 +2,18 @@ import logo from './logo.svg';
 //import './App.css';
 import Main from './componets/main'
 
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
 
-
+import Sentence from './componets/sentence_level'
+import Word from './componets/word_level'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Main />
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Main />} />
+        <Route exact path="/word" element={<Word />} />
+      </Routes>
+    </Router>
   );
 }
 
