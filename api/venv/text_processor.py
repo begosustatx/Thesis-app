@@ -8,7 +8,7 @@ nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 
-
+'''
 def open_file(name):
     content = open(name, "r")
     soup = BeautifulSoup(content, 'html.parser')
@@ -19,9 +19,11 @@ def open_file(name):
     strips.pop(0)
     strips.pop(len(strips)-1)
     return(strips)
-
+'''
 
 # creates an array of sentences separated by punctution
+
+
 def create_sentence_array(text):
     array = sent_tokenize(text)
     for sentence in array:

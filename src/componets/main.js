@@ -7,31 +7,26 @@ import { useEffect, useState } from 'react'
 export default function Example() {
 
     const [object, setObject] = useState('')
-
+    const [html, sethtml] = useState('')
     const [level, setLevel] = useState('')
-    const handleClick = () => {
-        console.log("here")
-        fetch('./short.txt')
-            .then((r) => r.text())
-            .then(text => {
-                console.log(text);
-            })
-    }
+
+
     useEffect(() => {
         fetch('/process_text').then(res => res.json()).then(data => {
             console.log(data)
-            setObject(data.object)
+            sethtml(data.object)
             //setWords(data.words.slice(0, 530))
             //setIndexeses(data.indexes)
             //setEffects(data.effects);
         });
     }, []);
 
-    //TODO CREATE NEW PATH AND CHECK IT DOESNT REPEAT 
+
+
+
 
     return (
-        /*{<div className=" mx-96 ">}*/
-        <div className="w-2/4 h-96		mx-auto mt-52 mb-40">
+        <div className="w-2/4 h-96		mx-auto mt-36 ">
             <span className="relative z-0 inline-flex shadow-sm rounded-md">
                 <button
                     onClick={() => setLevel("word")}
