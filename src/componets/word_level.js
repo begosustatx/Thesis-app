@@ -35,7 +35,7 @@ export default function Example() {
         }
         if (node.type === "tag" && node.name === "h1") {
             return (
-                <button className="bg-red-600 text-7xl">
+                <button className="text-7xl">
                     {processNodes(node.children, transform)}
                 </button>
             )
@@ -76,14 +76,12 @@ export default function Example() {
         return response.json(); // parses JSON response into native JavaScript objects
     }
     function handleStart() {
-        console.log("start")
         fetch('/start_tracking').then(res => res.json()).then(data => {
             console.log(data)
         });
     }
 
     function play_sound(effect_number, num_char, p_type) {
-        console.log("at play sound:", effect_number, "num char:", num_char, "p_type: ", p_type)
         postData('/play', { value: parseInt(effect_number), num_char: num_char, p_type: p_type })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
@@ -96,7 +94,7 @@ export default function Example() {
                 <button className=" mx-auto  inline-flex items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
                     onClick={() => handleStart()}>START</button>
             </div>
-            <div className="ml-10 mt-10 bg-slate-400 text-4xl tracking-wide leading-relaxed">
+            <div className="ml-10 mt-10 text-4xl tracking-wide leading-relaxed">
                 <div >{ReactHtmlParser(html, options)}</div>
             </div >
         </div >
