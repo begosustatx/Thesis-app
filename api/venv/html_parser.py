@@ -29,8 +29,6 @@ def open_file(file):
     text = f.read()
     parser = MyHTMLParser()
     parser.feed(text)
-    object = parser.string
-    print("here", parser.string)
     return(parser.string)
 
 

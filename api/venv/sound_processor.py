@@ -20,11 +20,9 @@ def get_correct_duration(sound, desired_duration):
     return sound_with_altered_frame_rate
 
 
-def play_sound(value):
+def play_sound(value, duration):
+    print("duration:", duration)
     sound = get_sound(value)
-    # lets assume the duration of a sentences is going to be (num of charachters)/2
-    # duration = (len(sentence)/2)
-    duration = 2
     new_sound = get_correct_duration(sound, duration)
     play(new_sound)
-    return "ok"
+    # return "ok"

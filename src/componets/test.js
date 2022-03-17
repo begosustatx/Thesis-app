@@ -22,14 +22,10 @@ export default function Example() {
     function transform(node, index) {
         //TODO: maybe add more css to other elements?
         if (node.type === "tag" && node.attribs.class === "adj" && node.name === "span") {
-            //SAYS THAT IS BIGGER THAN IT IS 
-            let length = (node.children[0].data.length)
-            let p_type = true
-            if (node.parent.name === "h1") p_type = false
             return (
                 <span
                     className="text-red-600"
-                    onMouseOver={() => play_sound(node.attribs.id, length, p_type)}
+                    onMouseOver={() => play_sound(node.attribs.id)}
                     onMouseLeave={() => console.log("out")}
                 > {node.children[0].data}</span>)
         }
@@ -40,7 +36,6 @@ export default function Example() {
                 </button>
             )
         }
-        //TODO: ADD THIS TO THE BACKEND 
         if (node.type === "tag" && node.name === "b") {
             return (
                 <b
@@ -75,28 +70,20 @@ export default function Example() {
         });
         return response.json(); // parses JSON response into native JavaScript objects
     }
-    function handleStart() {
-        console.log("start")
-        fetch('/start_tracking').then(res => res.json()).then(data => {
-            console.log(data)
-        });
-    }
 
-    function play_sound(effect_number, num_char, p_type) {
-        console.log("at play sound:", effect_number, "num char:", num_char, "p_type: ", p_type)
-        postData('/play', { value: parseInt(effect_number), num_char: num_char, p_type: p_type })
+
+    function play_sound(effect_number) {
+        console.log("at play sound:", effect_number)
+
+        postData('/play', { value: parseInt(effect_number) })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
             });
     }
 
     return (
-        <div className="w-2/4 h-96	mx-auto mt-52 ">
-            <div className="grid">
-                <button className=" mx-auto  inline-flex items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
-                    onClick={() => handleStart()}>START</button>
-            </div>
-            <div className="ml-10 mt-10 bg-slate-400 text-4xl tracking-wide leading-relaxed">
+        <div className="w-2/4 h-96	mx-auto mt-56 ">
+            <div className="ml-10 bg-slate-400 text-4xl tracking-wide leading-relaxed">
                 <div >{ReactHtmlParser(html, options)}</div>
             </div >
         </div >
