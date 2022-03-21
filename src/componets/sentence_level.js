@@ -1,20 +1,50 @@
 import React from 'react';
 import { useEffect, useState } from 'react'
+import ReactHtmlParser, {
+    processNodes
+} from "react-html-parser";
+import { useNavigate } from 'react-router-dom'
+export default function Example() {
+    const navigate = useNavigate();
 
-export default function Example({ object }) {
+    const [html, sethtml] = useState('')
+    const [start, setStart] = useState(false)
 
-    const [words, setWords] = useState([])
-    const [indexes, setIndexeses] = useState([])
-    const [effects, setEffects] = useState([])
-    const [objects, setObject] = useState([])
+    const options = {
+        decodeEntities: true,
+        transform
+    };
 
     useEffect(() => {
-        postData('/sentence', { value: object })
-            .then(data => {
-                console.log(data);
-                setObject(data.html_object)
-            });
+        fetch('/process_text').then(res => res.json()).then(data => {
+            sethtml(data.object)
+        });
     }, []);
+
+    function transform(node, index) {
+        //TODO: maybe add more css to other elements?
+        if (node.type === "tag" && node.attribs.class === "adj" && node.name === "span") {
+            //SAYS THAT IS BIGGER THAN IT IS 
+            let length = (node.children[0].data.length)
+            //P_TYPE if is p or h1
+            let p_type = true
+            if (node.parent.name === "h1") p_type = false
+            return (
+                <span
+                    className="text-red-600"
+                    onMouseOver={() => play_sound(node.attribs.id, length, p_type)}
+                    onMouseLeave={() => console.log("out")}
+                > {node.children[0].data}</span>)
+        }
+        if (node.type === "tag" && node.name === "h1") {
+            return (
+                <button className="text-7xl">
+                    {processNodes(node.children, transform)}
+                </button>
+            )
+        }
+    }
+
 
     async function postData(url = '', data = {}) {
         // Opciones por defecto estan marcadas con un *
@@ -33,29 +63,39 @@ export default function Example({ object }) {
         });
         return response.json(); // parses JSON response into native JavaScript objects
     }
+    function handleStart() {
+        fetch('/start_tracking').then(res => res.json()).then(data => {
+            console.log(data)
+        });
+    }
+    function handleStop() {
+        fetch('/stop_tracking').then(res => res.json()).then(data => {
+            console.log(data)
+        });
+        navigate('/')
+    }
 
-
-    function play_sound(index) {
-        let index_effect = indexes.findIndex(item => item === index)
-        let effect = effects[index_effect]
-        postData('/play', { value: effect })
-            .then(data => {
-                console.log(data); // JSON data parsed by `data.json()` call
-            });
+    function play_sound(effect_number, num_char, p_type) {
+        if (start) {
+            postData('/play', { value: parseInt(effect_number), num_char: num_char, p_type: p_type })
+                .then(data => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                });
+        }
+        else alert("Please click start")
     }
 
     return (
-        <div className="ml-10">
-            {<div>
-                {objects.map((object, i) =>
-                    object.sentences.map((sentence, index) =>
-                        object.type === "title" ?
-                            <h1 key={i.toString() + index.toString()} className="text-red-600" className="text-7xl">{sentence}</h1>
-                            :
-                            <p key={i.toString() + index.toString()} className="text-3xl">{sentence}</p>
-                    ))
-                }
-            </div>}
+        <div className="w-2/4 h-96	mx-auto mt-52 ">
+            <div className="">
+                <button className="  items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
+                    onClick={() => handleStop()}>BACK</button>
+                <button className="float-right	 items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
+                    onClick={() => handleStart()}>START</button>
+            </div>
+            <div className="ml-10 mt-10 text-5xl tracking-wide leading-loose">
+                <div >{ReactHtmlParser(html, options)}</div>
+            </div >
         </div >
     )
 }

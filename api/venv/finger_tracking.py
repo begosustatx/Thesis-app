@@ -12,6 +12,7 @@ class SpeedCalculator:
     def __init__(self, start_pos=2120, end_pos=3360, char_per_line_p=82):
         self.start_pos = start_pos
         self.end_pos = end_pos
+        self.running = True
         self.coord_per_char_p = round(
             ((end_pos-start_pos)/char_per_line_p), 0)
         self.coord_per_sec = 0
@@ -30,7 +31,7 @@ class SpeedCalculator:
 
     def calculate_speed(self):
         prev_currentMouseX = pyautogui.position().x
-        while True:
+        while self.running:
             new_currentMouseX = pyautogui.position().x
             if new_currentMouseX >= self.start_pos and new_currentMouseX <= self.end_pos:
                 coord = abs(new_currentMouseX-prev_currentMouseX)
@@ -45,3 +46,6 @@ class SpeedCalculator:
             # TODO: ADD H1
             coord_num = char_number * self.coord_per_char_p
         return (coord_num/self.coord_per_sec)
+
+    def stop(self):
+        self.running = False

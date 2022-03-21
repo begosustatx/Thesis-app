@@ -1,8 +1,8 @@
 from html.parser import HTMLParser
 from html.entities import name2codepoint
 import codecs
-from text_processor import sentence_processor, word_processor
-from new_TP import word_process
+#from text_processor import sentence_processor, word_processor
+from new_TP import sentence_process
 
 
 class MyHTMLParser(HTMLParser):
@@ -16,7 +16,7 @@ class MyHTMLParser(HTMLParser):
         self.string = self.string + ' <'+tag+'> '
 
     def handle_data(self, data):
-        data = word_process(data)
+        data = sentence_process(data)
         self.string = self.string + data
 
     def handle_endtag(self, tag):
@@ -32,6 +32,7 @@ def open_file(file):
     return(parser.string)
 
 
+'''
 def process_file(object_array, word_level):
     final_object = []
     i = 0
@@ -46,3 +47,4 @@ def process_file(object_array, word_level):
             final_object.append(
                 {"type": type, "sentences": sentence_array, 'effects': effects})
     return {"html_object": final_object}
+'''

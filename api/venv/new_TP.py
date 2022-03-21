@@ -35,3 +35,18 @@ def word_process(data):
                 word = '<span class="adj" id={}> {} </span> '.format(num, word)
         new_data.append(word)
     return ("".join(new_data))
+
+
+def sentence_process(data):
+    #word_array = nltk.word_tokenize(data)
+    word_array = nltk.sent_tokenize(data)
+    tuple_array = nltk.pos_tag(word_array)
+    new_data = []
+    for i in range(len(tuple_array)):
+        word = tuple_array[i][0] + ' '
+        if tuple_array[i][1] == 'JJ':
+            num = classify_words(tuple_array[i][0])
+            if num != 0:
+                word = '<span class="adj" id={}> {} </span> '.format(num, word)
+        new_data.append(word)
+    return ("".join(new_data))
