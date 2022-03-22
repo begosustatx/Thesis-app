@@ -4,6 +4,8 @@ import ReactHtmlParser, {
     processNodes
 } from "react-html-parser";
 import { useNavigate } from 'react-router-dom'
+import Stats from './stats'
+
 export default function Example() {
     const navigate = useNavigate();
 
@@ -18,6 +20,7 @@ export default function Example() {
         fetch('/process_text').then(res => res.json()).then(data => {
             sethtml(data.object)
         });
+        console.log("here")
     }, []);
 
     function transform(node, index) {
@@ -91,8 +94,9 @@ export default function Example() {
     }
 
     return (
-        <div className="w-2/4 h-96	mx-auto mt-52 ">
-            <div className="">
+        <div className="w-2/4 h-96	mx-auto mt-24 ">
+            <Stats />
+            <div className="mt-10">
                 <button className="  items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
                     onClick={() => handleStop()}>BACK</button>
                 <button className="float-right	 items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"

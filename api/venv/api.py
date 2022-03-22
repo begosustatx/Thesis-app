@@ -1,10 +1,13 @@
 from flask import request
 from flask import Flask
 from sqlalchemy import null
-#from text_processor import sentence_processor, word_processor
+# from text_processor import sentence_processor, word_processor
 from html_parser import open_file
 from sound_processor import play_sound
 from finger_tracking import SpeedCalculator
+from stats import get_stats
+import pyautogui
+
 
 app = Flask(__name__)
 
@@ -56,5 +59,11 @@ def start_tracking():
 @app.route('/stop_tracking')
 def stop_tracking():
     tracking.stop()
-#tracking = Null
+# tracking = Null
     return {"OK": 200}
+
+
+@app.route('/get_stats')
+def get_stats():
+    pos = (pyautogui.position())
+    return {"x_pos": pos.x, "y_pos": pos.y}

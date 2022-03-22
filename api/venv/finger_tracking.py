@@ -37,7 +37,7 @@ class SpeedCalculator:
                 coord = abs(new_currentMouseX-prev_currentMouseX)
                 self.coord_per_sec = (self.coord_per_sec + coord)/2
             prev_currentMouseX = new_currentMouseX
-            time.sleep(1.0)
+            time.sleep(0.03)
 
     def get_sound_secs(self, char_number, p_type=True):
         if p_type:
@@ -45,7 +45,7 @@ class SpeedCalculator:
         else:
             # TODO: ADD H1
             coord_num = char_number * self.coord_per_char_p
-        return (coord_num/self.coord_per_sec)
+        return (coord_num/(self.coord_per_sec*20))
 
     def stop(self):
         self.running = False

@@ -1,14 +1,15 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
-
-import { useHistory } from "react-router-dom";
-
-import Sentence from './sentence_level'
-import Word from './word_level'
-import { useEffect, useState } from 'react'
+import { useNavigate, } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export default function Example() {
     const navigate = useNavigate();
+    useEffect(() => {
+        fetch('/stop_tracking').then(res => res.json()).then(data => {
+            console.log(data)
+        });
+    }, []);
+
 
     return (
         <div className="w-2/4 h-96		mx-auto mt-56 ">
