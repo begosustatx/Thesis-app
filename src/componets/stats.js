@@ -8,30 +8,46 @@ const stats = [
 ]
 
 export default function Example() {
-    const [data, setData] = useState();
-    const [x, setI] = useState(0)
+
+    const [x_pos, setX] = useState(0)
+    const [y_pos, setY] = useState(0)
+    const [coord_5ms, set5MS] = useState()
+    const [stop, setStop] = useState()
+    const [effect, setEffect] = useState();
+    const [playing, setPlaying] = useState();
     useEffect(() => {
         let temp_data = 0
         const interval = setInterval(() => {
             fetch('/get_stats').then(res => res.json()).then(data => {
                 temp_data = data
+                console.log(data)
             });
             //console.log('This will run every second!');
-            setData(temp_data.x_pos)
-        }, 50);
+            setX(temp_data.x_pos)
+            setY(temp_data.y_pos)
+            set5MS(temp_data.coord_5ms)
+            if (temp_data.stop) setStop("TRUE")
+            else setStop("FALSE")
+        }, 100);
         return () => clearInterval(interval);
     }, []);
     return (
-        <div>
-            <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-                {stats.map((item) => (
-                    <div key={item.name} className="px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
-                        <dt className="text-3xl font-light text-gray-500 truncate">{item.name}</dt>
-                        <dd className="mt-1 text-xl  text-gray-900">{item.stat1}:{data}</dd>
-                        <dd className="mt-1 text-xl  text-gray-900">{item.stat2}:{data}</dd>
-                    </div>
-                ))}
-            </dl>
+        <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div className="px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
+                <p className="text-3xl font-light text-gray-500 truncate">Position</p>
+                <p className="mt-1 text-xl  text-gray-900">x position: {x_pos}</p>
+                <p className="mt-1 text-xl  text-gray-900">y position: {y_pos}</p>
+            </div>
+            <div className="px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
+                <p className="text-3xl font-light text-gray-500 truncate">Speed</p>
+                <p className="mt-1 text-xl  text-gray-900">coord per 5 ms: {coord_5ms}</p>
+                <p className="mt-1 text-xl  text-gray-900">Stop: {stop}</p>
+            </div>
+            <div className="px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
+                <p className="text-3xl font-light text-gray-500 truncate">Position</p>
+                <p className="mt-1 text-xl  text-gray-900">x position: {y_pos}</p>
+                <p className="mt-1 text-xl  text-gray-900">y position: {y_pos}</p>
+            </div>
         </div>
     )
 }

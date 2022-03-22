@@ -95,7 +95,7 @@ export default function Example() {
 
     return (
         <div className="w-2/4 h-96	mx-auto mt-24 ">
-            <Stats />
+            <Stats start={start} />
             <div className="mt-10">
                 <button className="  items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
                     onClick={() => handleStop()}>BACK</button>
