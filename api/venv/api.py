@@ -42,11 +42,12 @@ def process_text():
 @app.route('/play', methods=["POST"])
 def play():
     value = request.json['value']
-    num_char = request.json['num_char']
-    p_type = request.json['p_type']
-    duration = tracking.get_sound_secs(num_char, p_type)
-    sound_api.play_sound(value, duration)
-    # sound_api.new_func()
+   # num_char = request.json['num_char']
+    #    p_type = request.json['p_type']
+  #  duration = tracking.get_sound_secs(num_char, p_type)
+   # sound_api.play_sound(value, duration)
+    sound_api.is_touching = True
+    sound_api.new_func1(value)
     return {"OK": 200}
 
 
@@ -72,4 +73,11 @@ def get_stats():
     #per_sec = round((tracking.coord_per_sec*20), 2)
     # add playing
     sound_api.stop_flag = tracking.stop_flag
-    return {"x_pos": pos.x, "y_pos": pos.y, "coord_5ms": tracking.coord_per_sec, "stop": tracking.stop_flag, }
+    playing = (not sound_api.stop_flag) and sound_api.is_touching
+    return {"x_pos": pos.x, "y_pos": pos.y, "coord_5ms": tracking.coord_per_sec, "stop": tracking.stop_flag, "effect": 1, "playing": playing}
+
+
+@app.route('/stop_touching')
+def stop_touching():
+    sound_api.is_touching = False
+    return {"OK": 200}

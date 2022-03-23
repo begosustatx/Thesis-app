@@ -37,7 +37,7 @@ export default function Example() {
             return (
                 <b
                     onMouseOver={() => play_sound("1", length, p_type)}
-                    onMouseLeave={() => console.log("out")}
+                    onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</b>)
         }
         if (node.type === "tag" && node.name === "i") {
@@ -47,7 +47,7 @@ export default function Example() {
             return (
                 <i className="text-blue-800"
                     onMouseOver={() => play_sound("2", length, p_type)}
-                    onMouseLeave={() => console.log("out")}
+                    onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</i>)
         }
     }
@@ -91,6 +91,14 @@ export default function Example() {
                 });
         }
         else alert("Please click start")
+    }
+
+    function stop_sound() {
+        console.log("OUT")
+        fetch('/stop_touching').then(res => res.json()).then(data => {
+            console.log(data)
+        });
+
     }
 
     return (
