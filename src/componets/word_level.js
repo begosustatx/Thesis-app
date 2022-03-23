@@ -37,7 +37,7 @@ export default function Example() {
             return (
                 <b
                     onMouseOver={() => play_sound("1", length, p_type)}
-                    onMouseLeave={() => console.log("out")}
+                    onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</b>)
         }
         if (node.type === "tag" && node.name === "i") {
@@ -47,7 +47,7 @@ export default function Example() {
             return (
                 <i className="text-blue-800"
                     onMouseOver={() => play_sound("2", length, p_type)}
-                    onMouseLeave={() => console.log("out")}
+                    onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</i>)
         }
     }
@@ -93,9 +93,17 @@ export default function Example() {
         else alert("Please click start")
     }
 
+    function stop_sound() {
+        console.log("OUT")
+        fetch('/stop_touching').then(res => res.json()).then(data => {
+            console.log(data)
+        });
+
+    }
+
     return (
         <div className="w-2/4 h-96	mx-auto mt-24 ">
-            <Stats />
+            <Stats start={start} />
             <div className="mt-10">
                 <button className="  items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
                     onClick={() => handleStop()}>BACK</button>

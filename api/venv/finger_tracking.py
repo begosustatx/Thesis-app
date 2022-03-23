@@ -15,7 +15,9 @@ class SpeedCalculator:
         self.running = True
         self.coord_per_char_p = round(
             ((end_pos-start_pos)/char_per_line_p), 0)
+        # TODO: RENAME VAR
         self.coord_per_sec = 0
+        self.stop_flag = False
 
     # TODO: CREATE THE REAL FUNCTION
     def test_speed(self):
@@ -33,11 +35,16 @@ class SpeedCalculator:
         prev_currentMouseX = pyautogui.position().x
         while self.running:
             new_currentMouseX = pyautogui.position().x
-            if new_currentMouseX >= self.start_pos and new_currentMouseX <= self.end_pos:
-                coord = abs(new_currentMouseX-prev_currentMouseX)
-                self.coord_per_sec = (self.coord_per_sec + coord)/2
+            coord = abs(new_currentMouseX-prev_currentMouseX)
+            self.stop_flag = False
+            # pause tracking when the mouse is not moving
+            if coord == 0:
+                self.stop_flag = True
+            # stop tracking when they move out of the screen
+            elif new_currentMouseX >= self.start_pos and new_currentMouseX <= self.end_pos:
+                self.coord_per_sec = round(((self.coord_per_sec + coord)/2), 2)
             prev_currentMouseX = new_currentMouseX
-            time.sleep(0.03)
+            time.sleep(0.05)
 
     def get_sound_secs(self, char_number, p_type=True):
         if p_type:
