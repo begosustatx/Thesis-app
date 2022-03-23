@@ -10,7 +10,6 @@ export default function Example() {
     const navigate = useNavigate();
 
     const [html, sethtml] = useState('')
-    const [start, setStart] = useState(false)
     const options = {
         decodeEntities: true,
         transform
@@ -18,6 +17,13 @@ export default function Example() {
 
     useEffect(() => {
         fetch('/process_text').then(res => res.json()).then(data => {
+            sethtml(data.object)
+        });
+        console.log("here")
+    }, []);
+
+    useEffect(() => {
+        fetch('/start_tracking').then(res => res.json()).then(data => {
             sethtml(data.object)
         });
         console.log("here")
@@ -32,23 +38,27 @@ export default function Example() {
             )
         }
         if (node.type === "tag" && node.name === "b") {
-            let length = (node.children[0].data.length)
-            let p_type = node.parent.name === "p"
             return (
                 <b
-                    onMouseOver={() => play_sound("1", length, p_type)}
+                    onMouseOver={() => play_sound("1")}
                     onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</b>)
         }
         if (node.type === "tag" && node.name === "i") {
-            let length = (node.children[0].data.length)
-            let p_type = node.parent.name === "p"
 
             return (
                 <i className="text-blue-800"
-                    onMouseOver={() => play_sound("2", length, p_type)}
+                    onMouseOver={() => play_sound("0")}
                     onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</i>)
+        }
+        if (node.type === "tag" && node.attribs.class === "adj" && node.name === "span") {
+            return (
+                <span
+                    className="text-red-600"
+                    onMouseOver={() => play_sound(node.attribs.id)}
+                    onMouseLeave={() => stop_sound()}
+                > {node.children[0].data}</span>)
         }
     }
 
@@ -70,27 +80,26 @@ export default function Example() {
         });
         return response.json(); // parses JSON response into native JavaScript objects
     }
+
+    /*
     function handleStart() {
         setStart(true)
         fetch('/start_tracking').then(res => res.json()).then(data => {
             console.log(data)
         });
-    }
+    }*/
     function handleStop() {
-        fetch('/stop_tracking').then(res => res.json()).then(data => {
-            console.log(data)
-        });
+        /* fetch('/stop_tracking').then(res => res.json()).then(data => {
+             console.log(data)
+         });*/
         navigate('/')
     }
 
-    function play_sound(effect_number, num_char, p_type) {
-        if (start) {
-            postData('/play', { value: parseInt(effect_number), num_char: num_char, p_type: p_type })
-                .then(data => {
-                    console.log(data); // JSON data parsed by `data.json()` call
-                });
-        }
-        else alert("Please click start")
+    function play_sound(effect_number) {
+        postData('/play', { value: parseInt(effect_number) })
+            .then(data => {
+                console.log(data); // JSON data parsed by `data.json()` call
+            });
     }
 
     function stop_sound() {
@@ -103,14 +112,8 @@ export default function Example() {
 
     return (
         <div className="w-2/4 h-96	mx-auto mt-24 ">
-            <Stats start={start} />
-            <div className="mt-10">
-                <button className="  items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
-                    onClick={() => handleStop()}>BACK</button>
-                <button className="float-right	 items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
-                    onClick={() => handleStart()}>START</button>
-            </div>
-            <div className="ml-10 mt-10 text-5xl tracking-wide leading-loose">
+            <Stats />
+            <div className="ml-10 mt-10 text-6xl tracking-wide leading-loose">
                 <div >{ReactHtmlParser(html, options)}</div>
             </div >
         </div >

@@ -2,7 +2,7 @@ from html.parser import HTMLParser
 from html.entities import name2codepoint
 import codecs
 #from text_processor import sentence_processor, word_processor
-from new_TP import sentence_process
+from new_TP import sentence_process, word_process
 
 
 class MyHTMLParser(HTMLParser):
@@ -16,7 +16,8 @@ class MyHTMLParser(HTMLParser):
         self.string = self.string + ' <'+tag+'> '
 
     def handle_data(self, data):
-        data = sentence_process(data)
+        #data = sentence_process(data)
+        data = word_process(data)
         self.string = self.string + data
 
     def handle_endtag(self, tag):

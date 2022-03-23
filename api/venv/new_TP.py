@@ -47,6 +47,7 @@ def sentence_process(data):
         if tuple_array[i][1] == 'JJ':
             num = classify_words(tuple_array[i][0])
             if num != 0:
-                word = '<span class="adj" id={}> {} </span> '.format(num, word)
+                # TODO: DECIDE THE RIGHT PATTERS
+                word = '<span class="adj" id={}> {} </span> '.format(3, word)
         new_data.append(word)
     return ("".join(new_data))
