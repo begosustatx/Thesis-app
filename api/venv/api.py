@@ -5,6 +5,7 @@ from sqlalchemy import null
 from html_parser import open_file
 from sound_processor import SoundProcessor
 from finger_tracking import SpeedCalculator
+from new_TP import get_intonation
 import pyautogui
 
 
@@ -33,7 +34,8 @@ def process_text():
     # initialize the speed with the test
     object = open_file(
         '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html')
-    return {"object": object}
+    intonation_info = get_intonation()
+    return {"object": object, "intonation_info": intonation_info}
 
 
 @app.route('/play', methods=["POST"])
@@ -81,4 +83,11 @@ def get_stats():
 @app.route('/stop_touching')
 def stop_touching():
     sound_api.is_touching = False
+    return {"OK": 200}
+
+
+@app.route('/get_intonation', methods=["POST"])
+def get_intonation_for_word():
+    word = request.json['word']
+    # return get_intonation(word)
     return {"OK": 200}

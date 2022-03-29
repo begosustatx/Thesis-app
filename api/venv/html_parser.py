@@ -2,7 +2,7 @@ from html.parser import HTMLParser
 from html.entities import name2codepoint
 import codecs
 #from text_processor import sentence_processor, word_processor
-from new_TP import sentence_process, word_process
+from new_TP import word_intonation_process, init
 
 
 class MyHTMLParser(HTMLParser):
@@ -17,7 +17,8 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
         #data = sentence_process(data)
-        data = word_process(data)
+        #data = word_sentiment_process(data)
+        data = word_intonation_process(data)
         self.string = self.string + data
 
     def handle_endtag(self, tag):
@@ -28,6 +29,7 @@ def open_file(file):
     f = codecs.open(
         file, 'r')
     text = f.read()
+    init()
     parser = MyHTMLParser()
     parser.feed(text)
     return(parser.string)

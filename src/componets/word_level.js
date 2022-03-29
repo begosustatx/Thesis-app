@@ -5,11 +5,15 @@ import ReactHtmlParser, {
 } from "react-html-parser";
 import { useNavigate } from 'react-router-dom'
 import Stats from './stats'
+import SideMenu from './side_bar'
+import Scroll from './scroll_btn'
 
 export default function Example() {
     const navigate = useNavigate();
 
     const [html, sethtml] = useState('')
+    const [intonation_dict, setIntonation_dict] = useState([])
+
     const options = {
         decodeEntities: true,
         transform
@@ -18,25 +22,17 @@ export default function Example() {
     useEffect(() => {
         fetch('/process_text').then(res => res.json()).then(data => {
             sethtml(data.object)
+            setIntonation_dict(data.intonation_info)
         });
-        console.log("here")
     }, []);
 
     useEffect(() => {
         fetch('/start_tracking').then(res => res.json()).then(data => {
-            sethtml(data.object)
+            console.log("wtf")
         });
-        console.log("here")
     }, []);
 
     function transform(node, index) {
-        if (node.type === "tag" && node.name === "h1") {
-            return (
-                <button className="text-7xl">
-                    {processNodes(node.children, transform)}
-                </button>
-            )
-        }
         if (node.type === "tag" && node.name === "b") {
             return (
                 <b
@@ -60,8 +56,32 @@ export default function Example() {
                     onMouseLeave={() => stop_sound()}
                 > {node.children[0].data}</span>)
         }
+        if (node.type === "tag" && node.attribs.class === "intonation" && node.name === "span") {
+            let object = setIntonation(node.children[0].data)
+            if (object !== undefined)
+                return (
+                    <span>
+                        {object.array.map((syl, index) =>
+                            index === object.index ?
+                                <span
+                                    className="text-green-600"
+                                    onMouseOver={() => play_sound(1)}
+                                    onMouseLeave={() => stop_sound()}
+                                >{syl}</span>
+                                :
+                                <span
+                                    className="text-red-600"
+                                >{syl}</span>
+                        )}
+                    </span>)
+        }
     }
 
+    function setIntonation(word) {
+        word = word.replace(/ /g, '')
+        return (intonation_dict.find(element => element.word === word.toLowerCase()));
+
+    }
 
     async function postData(url = '', data = {}) {
         // Opciones por defecto estan marcadas con un *
@@ -111,11 +131,15 @@ export default function Example() {
     }
 
     return (
-        <div className="w-2/4 h-96	mx-auto mt-24 ">
-            <Stats />
-            <div className="ml-10 mt-10 text-6xl tracking-wide leading-loose">
-                <div >{ReactHtmlParser(html, options)}</div>
+        <div className="grid grid-cols-4  mt-24">
+            <SideMenu />
+            <div className="h-96	mx-auto col-span-2">
+                <Stats />
+                <div className="ml-10 mt-10 text-6xl tracking-wide leading-loose">
+                    <div >{ReactHtmlParser(html, options)}</div>
+                </div >
             </div >
-        </div >
+            <Scroll />
+        </div>
     )
 }

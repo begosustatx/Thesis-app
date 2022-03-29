@@ -18,7 +18,7 @@ export default function Example() {
     const [playing, setPlaying] = useState();
     useEffect(() => {
         let temp_data = 0
-        const interval = setInterval(() => {
+        /*const interval = setInterval(() => {
             fetch('/get_stats').then(res => res.json()).then(data => {
                 temp_data = data
                 //                console.log(data)
@@ -33,26 +33,26 @@ export default function Example() {
             if (temp_data.stop) setStop("TRUE")
             else setStop("FALSE")
         }, 100);
-        return () => clearInterval(interval);
+        return () => clearInterval(interval);*/
     },
         []);
     return (
-        <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-7">
-            <div className="flex items-center ">
+        <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-6">
+            {/*<div className="flex items-center ">
                 <button className="  items-center px-10 py-5 border border-transparent text-lg font-medium rounded-md shadow-sm text-black bg-gray-200 cursor-pointer"
                     onClick={() => navigate('/')}>BACK</button>
-            </div>
-            <div className=" col-span-2 px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
+    </div>*/}
+            <div className=" col-span-2 px-6 py-3 bg-gray-50 border border-gray-200  rounded-lg overflow-hidden font-light">
                 <p className="text-3xl font-light text-gray-500 truncate">Position</p>
                 <p className="mt-1 text-xl  text-gray-900">x position: {x_pos}</p>
                 <p className="mt-1 text-xl  text-gray-900">y position: {y_pos}</p>
             </div>
-            <div className="col-span-2  px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
+            <div className="col-span-2  px-6 py-3 bg-gray-50 border border-gray-200 rounded-lg overflow-hidden font-light">
                 <p className="text-3xl font-light text-gray-500 truncate">Speed</p>
                 <p className="mt-1 text-xl  text-gray-900">coord per 5 ms: {coord_5ms}</p>
                 <p className="mt-1 text-xl  text-gray-900">Stop: {stop}</p>
             </div>
-            <div className="col-span-2  px-6 py-3 bg-gray-50 shadow rounded-lg overflow-hidden font-light">
+            <div className="col-span-2  px-6 py-3 bg-gray-50 border border-gray-200  rounded-lg overflow-hidden font-light">
                 <p className="text-3xl font-light text-gray-500 truncate">Sounds</p>
                 <p className="mt-1 text-xl  text-gray-900">Playing: {playing}</p>
             </div>
