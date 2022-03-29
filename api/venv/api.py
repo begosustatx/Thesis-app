@@ -12,6 +12,7 @@ import pyautogui
 app = Flask(__name__)
 
 # export FLASK_APP=api
+# $env:FLASK_APP = "api.py"
 # flask run
 
 '''
@@ -35,9 +36,9 @@ def process_text():
     global tracking
     tracking = SpeedCalculator()
     object = open_file(
-        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html')
+        #'/Users/begona/Documents/GitHub/Thesis/react-flask-app/
+        'C:/Users/begona/Documents/GitHub/thesis-app/threePig.html')
     return {"object": object}
-
 
 @app.route('/play', methods=["POST"])
 def play():

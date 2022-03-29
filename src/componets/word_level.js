@@ -19,6 +19,7 @@ export default function Example() {
     useEffect(() => {
         fetch('/process_text').then(res => res.json()).then(data => {
             sethtml(data.object)
+            console.log(data)
         });
         console.log("here")
     }, []);

@@ -1,9 +1,8 @@
 from pydub.playback import play
 import contextlib
 import wave
-from pydub import AudioSegment
-import simpleaudio as sa
 from pydub import AudioSegment, playback
+import simpleaudio as sa
 
 
 class SoundProcessor:
@@ -19,7 +18,7 @@ class SoundProcessor:
 
     def new_func1(self, num):
         sound = self.get_sound(num)
-        play_obj = playback._play_with_simpleaudio(sound)
+        play_obj = playback.play(sound)
         while (self.is_touching):
             if(not play_obj.is_playing() and (not self.stop_flag)):
                 play_obj = playback._play_with_simpleaudio(sound)

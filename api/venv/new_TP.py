@@ -1,7 +1,10 @@
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-
+import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('vader_lexicon')
 def classify_words(word):
     sid = SentimentIntensityAnalyzer()
     emotion = sid.polarity_scores(word)

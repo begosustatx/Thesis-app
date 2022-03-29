@@ -18,11 +18,11 @@ export default function Example() {
     useEffect(() => {
         let temp_data = 0
         const interval = setInterval(() => {
-            fetch('/get_stats').then(res => res.json()).then(data => {
-                temp_data = data
+       //     fetch('/get_stats').then(res => res.json()).then(data => {
+         //       temp_data = data
                 //                console.log(data)
-            }
-            );
+           // }
+            //);
             //console.log('This will run every second!');
             setX(temp_data.x_pos)
             setY(temp_data.y_pos)
