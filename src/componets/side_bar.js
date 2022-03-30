@@ -1,18 +1,60 @@
 /* This example requires Tailwind CSS v2.0+ */
 
-const levels = [
-    { id: 'sentence', title: 'Sentence' },
-    { id: 'word', title: 'Word' },
-]
+import { useState } from "react";
 
-const info = [
-    { id: 'intonation', title: 'Intonation' },
-    { id: 'style', title: 'Style' },
-    { id: 'part_speech', title: 'Part of the speech' },
-    { id: 'semmantics', title: 'Semmantics' },
-]
+
+
+
 
 export default function Example() {
+
+    const [levels, setLevels] = useState([
+        { id: 'sentence', title: 'Sentence', selected: false },
+        { id: 'word', title: 'Word', selected: true },
+    ])
+
+    const [info, setInfo] = useState([
+        { id: 'intonation', title: 'Intonation', selected: false, active: true },
+        { id: 'style', title: 'Style', selected: false, active: true },
+        { id: 'part_speech', title: 'Part of the speech', selected: false, active: true },
+        { id: 'semmantics', title: 'Semmantics', selected: false, active: true },
+    ])
+
+    const [numSelected, setNumSelected] = useState(0)
+
+    function handleSelectChange(index) {
+        let new_levels = [...levels]
+        let old_index = levels.indexOf(levels.filter(elem => elem.selected === true)[0])
+        if (old_index != -1)
+            new_levels[old_index].selected = false
+        new_levels[index].selected = true;
+        setLevels(new_levels)
+
+        let i = info.indexOf(info.filter(elem => elem.id === 'intonation')[0])
+        let bool = true
+        if (levels[index].id === 'sentence')
+            bool = false
+        info[i].active = bool
+    }
+
+    function handleCheckBoxChange(index) {
+        let bool = !info[index].selected
+        if (info[index].selected) {
+            setNumSelected(numSelected - 1)
+        }
+        else if (!info[index].selected && numSelected < 2) {
+            setNumSelected(numSelected + 1)
+        }
+        else {
+            bool = false
+        }
+        info[index].selected = bool
+    }
+
+    function handleStart() {
+        //TODO
+    }
+
     return (
         <div className="flex-1 flex flex-col min-h-0 px-16 mt-5 font-light">
             <div className=" flex flex-col p-10 rounded-xl bg-gray-50 border border-gray-200 ">
@@ -20,14 +62,15 @@ export default function Example() {
                 <p className="text-xl leading-5 text-gray-500 mt-5">How do you prefer the haptics effect to be applied? </p>
                 <fieldset className="mt-10">
                     <div className="space-y-10">
-                        {levels.map((level) => (
+                        {levels.map((level, index) => (
                             <div key={level.id} className="flex items-center">
                                 <input
                                     id={level.id}
                                     name="level-method"
                                     type="radio"
-                                    defaultChecked={level.id === 'word'}
+                                    selected={level.id === 'word'}
                                     className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300"
+                                    onChange={() => handleSelectChange(index)}
                                 />
                                 <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700">
                                     {level.title}
@@ -42,13 +85,16 @@ export default function Example() {
                 <p className="text-xl leading-5 text-gray-500 mt-5">What information do you wish to represent? </p>
                 <fieldset className="mt-10">
                     <div className="space-y-10">
-                        {info.map((level) => (
-                            <div key={level.id} className="flex items-center">
+                        {info.map((level, index) => (
+                            level.active &&
+                            < div key={level.id} className="flex items-center" >
                                 <input
                                     id={level.id}
                                     name="level-method"
                                     type="checkbox"
                                     className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300"
+                                    disabled={!level.selected && numSelected >= 2}
+                                    onChange={() => handleCheckBoxChange(index)}
                                 />
                                 <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700">
                                     {level.title}
@@ -58,6 +104,11 @@ export default function Example() {
                     </div>
                 </fieldset>
             </div>
-        </div>
+            <div
+                onClick={handleStart}
+                className="bg-gray-50 border border-gray-200">
+                START
+            </div>
+        </div >
     )
 }
