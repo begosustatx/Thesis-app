@@ -121,7 +121,7 @@ export default function Example() {
     }
 
     function play_sound(effect_number) {
-        postData('/process_text', { value: parseInt(effect_number) })
+        postData('/play', { value: parseInt(effect_number) })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
             });
@@ -140,7 +140,7 @@ export default function Example() {
             <SideMenu sethtml={sethtml} setIntonation_dict={setIntonation_dict} postData={postData} setStyle={setStyle} />
             <div className="h-96	mx-auto col-span-2">
                 <Stats />
-                <div className="ml-10 mt-10 text-6xl tracking-wide leading-loose h-196 overflow-scroll	">
+                <div className="ml-20 mt-10 text-6xl tracking-wide leading-loose h-196 overflow-scroll">
                     <div >{ReactHtmlParser(html, options)}</div>
                 </div >
             </div >

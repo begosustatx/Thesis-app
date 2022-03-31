@@ -90,10 +90,10 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
                                     name="level-method"
                                     type="radio"
                                     selected={level.id === 'word'}
-                                    className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300"
+                                    className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer "
                                     onChange={() => handleSelectChange(index)}
                                 />
-                                <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700">
+                                <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700 cursor-pointer">
                                     {level.title}
                                 </label>
                             </div>
@@ -113,11 +113,11 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
                                     id={level.id}
                                     name="level-method"
                                     type="checkbox"
-                                    className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300"
+                                    className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer"
                                     disabled={!level.selected && numSelected >= 2}
                                     onChange={() => handleCheckBoxChange(index)}
                                 />
-                                <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700">
+                                <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700 cursor-pointer">
                                     {level.title}
                                 </label>
                             </div>
@@ -127,7 +127,7 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
             </div>
             <div
                 onClick={handleStart}
-                className="bg-gray-50 border border-gray-200 mt-10 rounded-xl p-20 text-5xl text-center font-semibold">
+                className="bg-gray-50 border border-gray-200 mt-10 rounded-xl p-20 text-5xl text-center font-semibold cursor-pointer">
                 START
             </div>
         </div >

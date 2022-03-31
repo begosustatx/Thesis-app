@@ -8,7 +8,6 @@ from new_TP import word_intonation_process, init, sentence_sentiment_process, wo
 class MyHTMLParser(HTMLParser):
 
     def __init__(self, type, option):
-        print(type, option)
         self.type = type
         self.option = option
         self.tag_data = []
