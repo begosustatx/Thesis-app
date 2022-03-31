@@ -1,7 +1,6 @@
 from flask import request
 from flask import Flask
 from sqlalchemy import null
-# from text_processor import sentence_processor, word_processor
 from html_parser import open_file
 from sound_processor import SoundProcessor
 from finger_tracking import SpeedCalculator
