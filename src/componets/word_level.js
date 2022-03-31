@@ -11,6 +11,7 @@ import Scroll from './scroll_btn'
 export default function Example() {
     const navigate = useNavigate();
 
+    const [style, setStyle] = useState(false)
     const [html, sethtml] = useState('')
     const [intonation_dict, setIntonation_dict] = useState([])
 
@@ -18,13 +19,13 @@ export default function Example() {
         decodeEntities: true,
         transform
     };
-
-    useEffect(() => {
-        fetch('/process_text').then(res => res.json()).then(data => {
-            sethtml(data.object)
-            setIntonation_dict(data.intonation_info)
-        });
-    }, []);
+    /*
+        useEffect(() => {
+            fetch('/process_text').then(res => res.json()).then(data => {
+                sethtml(data.object)
+                setIntonation_dict(data.intonation_info)
+            });
+        }, []);*/
 
     useEffect(() => {
         fetch('/start_tracking').then(res => res.json()).then(data => {
@@ -33,54 +34,58 @@ export default function Example() {
     }, []);
 
     function transform(node, index) {
-        if (node.type === "tag" && node.name === "b") {
-            return (
-                <b
-                    onMouseOver={() => play_sound("1")}
-                    onMouseLeave={() => stop_sound()}
-                > {node.children[0].data}</b>)
-        }
-        if (node.type === "tag" && node.name === "i") {
-
-            return (
-                <i className="text-blue-800"
-                    onMouseOver={() => play_sound("0")}
-                    onMouseLeave={() => stop_sound()}
-                > {node.children[0].data}</i>)
-        }
-        if (node.type === "tag" && node.attribs.class === "adj" && node.name === "span") {
-            return (
-                <span
-                    className="text-red-600"
-                    onMouseOver={() => play_sound(node.attribs.id)}
-                    onMouseLeave={() => stop_sound()}
-                > {node.children[0].data}</span>)
-        }
-        if (node.type === "tag" && node.attribs.class === "intonation" && node.name === "span") {
-            let object = setIntonation(node.children[0].data)
-            if (object !== undefined)
+        if (style) {
+            if (node.type === "tag" && node.name === "b") {
                 return (
-                    <span>
-                        {object.array.map((syl, index) =>
-                            index === object.index ?
-                                <span
-                                    className="text-green-600"
-                                    onMouseOver={() => play_sound(1)}
-                                    onMouseLeave={() => stop_sound()}
-                                >{syl}</span>
-                                :
-                                <span
-                                    className="text-red-600"
-                                >{syl}</span>
-                        )}
-                    </span>)
+                    <b
+                        onMouseOver={() => play_sound("1")}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</b>)
+            }
+            if (node.type === "tag" && node.name === "i") {
+
+                return (
+                    <i className="text-blue-800"
+                        onMouseOver={() => play_sound("0")}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</i>)
+            }
         }
+        else {
+            if (node.type === "tag" && node.attribs.class === "adj" && node.name === "span") {
+                return (
+                    <span
+                        className="text-red-600"
+                        onMouseOver={() => play_sound(node.attribs.id)}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</span>)
+            }
+            if (node.type === "tag" && node.attribs.class === "intonation" && node.name === "span") {
+                let object = setIntonation(node.children[0].data)
+                if (object !== undefined)
+                    return (
+                        <span>
+                            {object.array.map((syl, index) =>
+                                index === object.index ?
+                                    <span
+                                        className="text-green-600"
+                                        onMouseOver={() => play_sound(1)}
+                                        onMouseLeave={() => stop_sound()}
+                                    >{syl}</span>
+                                    :
+                                    <span
+                                        className="text-red-600"
+                                    >{syl}</span>
+                            )}
+                        </span>)
+            }
+        }
+
     }
 
     function setIntonation(word) {
         word = word.replace(/ /g, '')
         return (intonation_dict.find(element => element.word === word.toLowerCase()));
-
     }
 
     async function postData(url = '', data = {}) {
@@ -116,7 +121,7 @@ export default function Example() {
     }
 
     function play_sound(effect_number) {
-        postData('/play', { value: parseInt(effect_number) })
+        postData('/process_text', { value: parseInt(effect_number) })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
             });
@@ -131,11 +136,11 @@ export default function Example() {
     }
 
     return (
-        <div className="grid grid-cols-4  mt-24">
-            <SideMenu />
+        <div className="grid grid-cols-4  mt-24 ">
+            <SideMenu sethtml={sethtml} setIntonation_dict={setIntonation_dict} postData={postData} setStyle={setStyle} />
             <div className="h-96	mx-auto col-span-2">
                 <Stats />
-                <div className="ml-10 mt-10 text-6xl tracking-wide leading-loose">
+                <div className="ml-10 mt-10 text-6xl tracking-wide leading-loose h-196 overflow-scroll	">
                     <div >{ReactHtmlParser(html, options)}</div>
                 </div >
             </div >

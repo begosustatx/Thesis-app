@@ -3,69 +3,61 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pronouncing
 from hyphen import Hyphenator
 
-'''
-class TextProcessor:
 
-    def __init__(self, start_pos=2120, end_pos=3360, char_per_line_p=82):
-        self.intonation_words = []
-        self.intonation_words_dict = []
-        self. h = Hyphenator('en_US')
-
-    def classify_words(self, word):
-        sid = SentimentIntensityAnalyzer()
-        emotion = sid.polarity_scores(word)
-        result = 0
-        if (emotion['compound']) != 0.0:
-            if emotion['compound'] > 0.0 and emotion['compound'] < 0.2:
-                return 3
-            elif emotion['compound'] >= 0.2 and emotion['compound'] < 0.4:
-                return 2
-            elif emotion['compound'] >= 0.4 and emotion['compound'] < 0.6:
-                return 1
-            elif emotion['compound'] >= -0.2 and emotion['compound'] < 0.0:
-                return 4
-            elif emotion['compound'] >= -0.4 and emotion['compound'] < -0.2:
-                return 5
-            elif emotion['compound'] >= -0.6 and emotion['compound'] < -0.4:
-                return 6
-        else:
-            return 0
+def classify_words(word):
+    sid = SentimentIntensityAnalyzer()
+    emotion = sid.polarity_scores(word)
+    result = 0
+    if (emotion['compound']) != 0.0:
+        if emotion['compound'] > 0.0 and emotion['compound'] < 0.2:
+            return 3
+        elif emotion['compound'] >= 0.2 and emotion['compound'] < 0.4:
+            return 2
+        elif emotion['compound'] >= 0.4 and emotion['compound'] < 0.6:
+            return 1
+        elif emotion['compound'] >= -0.2 and emotion['compound'] < 0.0:
+            return 4
+        elif emotion['compound'] >= -0.4 and emotion['compound'] < -0.2:
+            return 5
+        elif emotion['compound'] >= -0.6 and emotion['compound'] < -0.4:
+            return 6
+    else:
+        return 0
 
     # TODO: COMBINE BOTH WORD PROCESSORS
 
     # SENTIMENT ANALYSIS ON WORD LEVEL
 
-    def word_sentiment_process(self, data):
-        word_array = nltk.word_tokenize(data)
-        tuple_array = nltk.pos_tag(word_array)
-        new_data = []
-        for i in range(len(tuple_array)):
-            word = tuple_array[i][0] + ' '
-            if tuple_array[i][1] == 'JJ':
-                num = classify_words(tuple_array[i][0])
-                if num != 0:
-                    word = '<span class="adj" id={}> {} </span> '.format(
-                        num, word)
-            new_data.append(word)
-        return ("".join(new_data))
 
-    def sentence_process(self, data):
-        # word_array = nltk.word_tokenize(data)
-        word_array = nltk.sent_tokenize(data)
-        tuple_array = nltk.pos_tag(word_array)
-        new_data = []
-        for i in range(len(tuple_array)):
-            word = tuple_array[i][0] + ' '
-            if tuple_array[i][1] == 'JJ':
-                num = classify_words(tuple_array[i][0])
-                if num != 0:
-                    # TODO: DECIDE THE RIGHT PATTERS
-                    word = '<span class="adj" id={}> {} </span> '.format(
-                        3, word)
-            new_data.append(word)
-        return ("".join(new_data))
+def word_sentiment_process(data):
+    word_array = nltk.word_tokenize(data)
+    tuple_array = nltk.pos_tag(word_array)
+    new_data = []
+    for i in range(len(tuple_array)):
+        word = tuple_array[i][0] + ' '
+        if tuple_array[i][1] == 'JJ':
+            num = classify_words(tuple_array[i][0])
+            if num != 0:
+                word = '<span class="adj" id={}> {} </span> '.format(
+                    num, word)
+        new_data.append(word)
+    return ("".join(new_data))
 
-'''
+
+def sentence_sentiment_process(data):
+    # word_array = nltk.word_tokenize(data)
+    word_array = nltk.sent_tokenize(data)
+    tuple_array = nltk.pos_tag(word_array)
+    new_data = []
+    for i in range(len(tuple_array)):
+        word = tuple_array[i][0] + ' '
+        if tuple_array[i][1] == 'JJ':
+            num = classify_words(tuple_array[i][0])
+            if num != 0:
+                # TODO: DECIDE THE RIGHT PATTERS
+                word = '<span class="adj" id={}> {} </span> '.format(3, word)
+        new_data.append(word)
+    return ("".join(new_data))
 
 
 def init():

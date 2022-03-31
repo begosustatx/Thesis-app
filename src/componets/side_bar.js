@@ -6,7 +6,7 @@ import { useState } from "react";
 
 
 
-export default function Example() {
+export default function Example({ sethtml, setIntonation_dict, postData, setStyle }) {
 
     const [levels, setLevels] = useState([
         { id: 'sentence', title: 'Sentence', selected: false },
@@ -52,7 +52,28 @@ export default function Example() {
     }
 
     function handleStart() {
-        //TODO
+        let lev = levels.filter(elem => elem.selected === true)
+        let sub = info.filter(elem => elem.selected === true)
+        if (lev.length === 0 || sub.length === 0) {
+            alert("Please select you options")
+        }
+
+        else {
+            setStyle(false)
+            //TODO: FIX IF WE ALLOW MORE THAN 1 
+            if (sub[0].id === 'style') {
+                setStyle(true)
+            }
+            postData('/process_text', { type: lev[0].id, option: sub[0].id })
+                .then(data => {
+                    sethtml(data.object)
+                    if (sub[0].id === 'intonation') {
+                        console.log(data)
+                        setIntonation_dict(data.intonation_info)
+                    }
+                });
+        }
+
     }
 
     return (
@@ -106,7 +127,7 @@ export default function Example() {
             </div>
             <div
                 onClick={handleStart}
-                className="bg-gray-50 border border-gray-200">
+                className="bg-gray-50 border border-gray-200 mt-10 rounded-xl p-20 text-5xl text-center font-semibold">
                 START
             </div>
         </div >

@@ -29,22 +29,21 @@ def word():
 '''
 
 
-@app.route('/process_text')
+@app.route('/process_text', methods=["POST"])
 def process_text():
-    # initialize the speed with the test
+    type = request.json['type']
+    option = request.json['option']
     object = open_file(
-        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html')
-    intonation_info = get_intonation()
-    return {"object": object, "intonation_info": intonation_info}
+        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', type, option)
+    if option == 'intonation':
+        intonation_info = get_intonation()
+        return {"object": object, "intonation_info": intonation_info}
+    return {"object": object}
 
 
 @app.route('/play', methods=["POST"])
 def play():
     value = request.json['value']
-   # num_char = request.json['num_char']
-    #    p_type = request.json['p_type']
-  #  duration = tracking.get_sound_secs(num_char, p_type)
-   # sound_api.play_sound(value, duration)
     global sound_api
     sound_api = SoundProcessor()
     sound_api.is_touching = True
