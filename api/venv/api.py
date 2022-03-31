@@ -14,20 +14,6 @@ app = Flask(__name__)
 # export FLASK_APP=api
 # flask run
 
-'''
-@app.route('/sentence', methods=["POST"])
-def sentence():
-    value = request.json['value']
-    return process_file(value, False)
-
-
-@app.route('/word', methods=["POST"])
-def word():
-    value = request.json['value']
-    return process_file(value, True)
-
-'''
-
 
 @app.route('/process_text', methods=["POST"])
 def process_text():
@@ -59,34 +45,15 @@ def start_tracking():
     return {"OK": 200}
 
 
-'''
-@app.route('/stop_tracking')
-def stop_tracking():
-    tracking.stop()
-# tracking = Null
-    return {"OK": 200}
-'''
-
-
 @app.route('/get_stats')
 def get_stats():
     pos = (pyautogui.position())
-    # multiply by 20 becuase we calculate every 0.05 seconds
-    # per_sec = round((tracking.coord_per_sec*20), 2)
-    # add playing
     sound_api.stop_flag = tracking.stop_flag
     playing = (not sound_api.stop_flag) and sound_api.is_touching
-    return {"x_pos": pos.x, "y_pos": pos.y, "coord_5ms": tracking.coord_per_sec, "stop": tracking.stop_flag, "playing": playing}
+    return {"x_pos": pos.x, "y_pos": pos.y, "speed": tracking.speed, "stop": tracking.stop_flag, "playing": playing}
 
 
 @app.route('/stop_touching')
 def stop_touching():
     sound_api.is_touching = False
-    return {"OK": 200}
-
-
-@app.route('/get_intonation', methods=["POST"])
-def get_intonation_for_word():
-    word = request.json['word']
-    # return get_intonation(word)
     return {"OK": 200}

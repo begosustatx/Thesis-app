@@ -7,7 +7,6 @@ from hyphen import Hyphenator
 def classify_words(word):
     sid = SentimentIntensityAnalyzer()
     emotion = sid.polarity_scores(word)
-    result = 0
     if (emotion['compound']) != 0.0:
         if emotion['compound'] > 0.0 and emotion['compound'] < 0.2:
             return 3
@@ -24,11 +23,8 @@ def classify_words(word):
     else:
         return 0
 
-    # TODO: COMBINE BOTH WORD PROCESSORS
 
-    # SENTIMENT ANALYSIS ON WORD LEVEL
-
-
+# SENTIMENT ANALYSIS ON WORD LEVEL
 def word_sentiment_process(data):
     word_array = nltk.word_tokenize(data)
     tuple_array = nltk.pos_tag(word_array)
@@ -45,7 +41,6 @@ def word_sentiment_process(data):
 
 
 def sentence_sentiment_process(data):
-    # word_array = nltk.word_tokenize(data)
     word_array = nltk.sent_tokenize(data)
     tuple_array = nltk.pos_tag(word_array)
     new_data = []
@@ -64,9 +59,8 @@ def init():
     global intonation_words
     intonation_words = []
 
+
 # INTONATION ANALYSIS ON WORD LEVEL
-
-
 def word_intonation_process(data):
     h = Hyphenator('en_US')
     word_array = nltk.word_tokenize(data)

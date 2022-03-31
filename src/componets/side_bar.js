@@ -2,10 +2,6 @@
 
 import { useState } from "react";
 
-
-
-
-
 export default function Example({ sethtml, setIntonation_dict, postData, setStyle }) {
 
     const [levels, setLevels] = useState([
@@ -25,7 +21,7 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
     function handleSelectChange(index) {
         let new_levels = [...levels]
         let old_index = levels.indexOf(levels.filter(elem => elem.selected === true)[0])
-        if (old_index != -1)
+        if (old_index !== -1)
             new_levels[old_index].selected = false
         new_levels[index].selected = true;
         setLevels(new_levels)

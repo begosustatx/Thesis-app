@@ -8,6 +8,7 @@ from pydub import AudioSegment, playback
 
 class SoundProcessor:
 
+    # TODO: DECIDE THE RIGHT PATTERNS
     def __init__(self):
         self.sounds = ['Sounds/v-09-09-8-8.wav', 'Sounds/v-09-09-8-11.wav', 'Sounds/v-09-09-8-20.wav',
                        'Sounds/v-09-09-8-24.wav', 'Sounds/v-09-10-3-44.wav', 'Sounds/v-09-10-3-48.wav', 'Sounds/v-09-10-3-52.wav']
@@ -27,15 +28,3 @@ class SoundProcessor:
                 play_obj.stop()
         if(not self.is_touching):
             play_obj.stop()
-
-
-'''
-    def get_correct_duration(self, sound, desired_duration):
-        initial_duration = sound.duration_seconds
-        rate = round((initial_duration/desired_duration), 2)
-        # = sound._spawn(sound.raw_data, overrides={
-        # "frame_rate": int(sound.frame_rate * rate)
-        # })
-        wav_file_new = sound.set_frame_rate(int(sound.frame_rate * rate))
-        return wav_file_new
-'''

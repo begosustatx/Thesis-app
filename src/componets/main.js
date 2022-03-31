@@ -1,9 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react'
-import ReactHtmlParser, {
-    processNodes
-} from "react-html-parser";
-import { useNavigate } from 'react-router-dom'
+import ReactHtmlParser from "react-html-parser";
 import Stats from './stats'
 import SideMenu from './side_bar'
 import Scroll from './scroll_btn'
@@ -25,7 +22,7 @@ export default function Example() {
         });
     }, []);
 
-    function transform(node, index) {
+    function transform(node) {
         if (style) {
             if (node.type === "tag" && node.name === "b") {
                 return (
