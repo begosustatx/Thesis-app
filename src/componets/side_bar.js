@@ -7,33 +7,51 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
     const [levels, setLevels] = useState([
         { id: 'sentence', title: 'Sentence', selected: false },
         { id: 'word', title: 'Word', selected: true },
+        { id: 'style', title: 'Style', selected: false },
     ])
 
     const [info, setInfo] = useState([
         { id: 'intonation', title: 'Intonation', selected: false, active: true },
-        { id: 'style', title: 'Style', selected: false, active: true },
-        { id: 'part_speech', title: 'Part of the speech', selected: false, active: true },
         { id: 'semmantics', title: 'Semmantics', selected: false, active: true },
+        { id: 'part_speech', title: 'Part of the speech', selected: false, active: true },
     ])
 
+    const semmantics = [
+        { id: 'verb', title: 'Verb' },
+        { id: 'adverb', title: 'Adverb' },
+        { id: 'pronoun', title: 'Pronoun' },
+        { id: 'noun', title: 'Noun' },
+
+    ]
+
+    const [activeLev, setActiveLev] = useState('')
+    const [activeTag, setActiveTag] = useState('')
     const [numSelected, setNumSelected] = useState(0)
 
-    function handleSelectChange(index) {
+    function handleSelectChange(id, index) {
+        for (let i = 0; i < info.length; i++) {
+            info[i].active = true
+        }
+        setActiveLev(id)
+        /*
         let new_levels = [...levels]
         let old_index = levels.indexOf(levels.filter(elem => elem.selected === true)[0])
         if (old_index !== -1)
             new_levels[old_index].selected = false
         new_levels[index].selected = true;
         setLevels(new_levels)
+        */
 
-        let i = info.indexOf(info.filter(elem => elem.id === 'intonation')[0])
-        let bool = true
-        if (levels[index].id === 'sentence')
-            bool = false
-        info[i].active = bool
+        let i = info.indexOf(info.filter(elem => elem.id === 'part_speech')[0])
+        if (id === 'style' || id === 'sentence') {
+            for (let j = 0; i < info.length; j++) {
+                if (id === 'style' || (id === 'sentence' && j !== i))
+                    info[j].active = false
+            }
+        }
     }
 
-    function handleCheckBoxChange(index) {
+    function handleCheckBoxChange(id, index) {
         let bool = !info[index].selected
         if (info[index].selected) {
             setNumSelected(numSelected - 1)
@@ -45,22 +63,23 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
             bool = false
         }
         info[index].selected = bool
+        if (id === 'part_speech')
+            setActiveTag('adjective')
     }
 
     function handleStart() {
-        let lev = levels.filter(elem => elem.selected === true)
         let sub = info.filter(elem => elem.selected === true)
-        if (lev.length === 0 || sub.length === 0) {
+        if (activeLev === '' || sub.length === 0) {
             alert("Please select you options")
         }
-
         else {
             setStyle(false)
             //TODO: FIX IF WE ALLOW MORE THAN 1 
-            if (sub[0].id === 'style') {
+            if (activeLev === 'style') {
                 setStyle(true)
             }
-            postData('/process_text', { type: lev[0].id, option: sub[0].id })
+            console.log(activeTag)
+            postData('/process_text', { level: activeLev, option: sub[0].id, tag: activeTag })
                 .then(data => {
                     sethtml(data.object)
                     if (sub[0].id === 'intonation') {
@@ -69,16 +88,21 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
                     }
                 });
         }
+    }
 
+    function isSemmanticsActive() {
+        let i = info.indexOf(info.filter(elem => elem.id === 'semmantics')[0])
+        console.log(!info[i].selected)
+        return (!info[i].selected)
     }
 
     return (
-        <div className="flex-1 flex flex-col min-h-0 px-16 mt-5 font-light">
-            <div className=" flex flex-col p-10 rounded-xl bg-gray-50 border border-gray-200 ">
+        <div className="flex-1 flex flex-col min-h-0 px-16 font-light">
+            <div className=" flex flex-col px-8 py-5 rounded-xl bg-gray-50 border border-gray-200 ">
                 <label className="text-4xl  text-gray-900">Haptics level</label>
-                <p className="text-xl leading-5 text-gray-500 mt-5">How do you prefer the haptics effect to be applied? </p>
-                <fieldset className="mt-10">
-                    <div className="space-y-10">
+                <p className="text-lg leading-5 text-gray-500 mt-5">How do you prefer the haptics effect to be applied? </p>
+                <fieldset className="mt-5">
+                    <div className="space-y-7">
                         {levels.map((level, index) => (
                             <div key={level.id} className="flex items-center">
                                 <input
@@ -87,9 +111,9 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
                                     type="radio"
                                     selected={level.id === 'word'}
                                     className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer "
-                                    onChange={() => handleSelectChange(index)}
+                                    onChange={() => handleSelectChange(level.id, index)}
                                 />
-                                <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700 cursor-pointer">
+                                <label htmlFor={level.id} className="ml-3 block text-3xl text-gray-700 cursor-pointer">
                                     {level.title}
                                 </label>
                             </div>
@@ -97,23 +121,45 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
                     </div>
                 </fieldset>
             </div>
-            <div className=" flex flex-col p-10 rounded-xl mt-20 bg-gray-50 border border-gray-200">
+            <div className=" flex flex-col px-8 py-5 rounded-xl mt-6 bg-gray-50 border border-gray-200">
                 <label className="text-4xl  text-gray-900">Information represented</label>
-                <p className="text-xl leading-5 text-gray-500 mt-5">What information do you wish to represent? </p>
-                <fieldset className="mt-10">
-                    <div className="space-y-10">
+                <p className="text-lg leading-5 text-gray-500 mt-5">What information do you wish to represent? </p>
+                <fieldset className="mt-5">
+                    <div className="space-y-7">
                         {info.map((level, index) => (
-                            level.active &&
                             < div key={level.id} className="flex items-center" >
                                 <input
                                     id={level.id}
                                     name="level-method"
                                     type="checkbox"
                                     className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer"
-                                    disabled={!level.selected && numSelected >= 2}
-                                    onChange={() => handleCheckBoxChange(index)}
+                                    disabled={(!level.selected && numSelected >= 2) || !level.active}
+                                    onChange={() => handleCheckBoxChange(level.id, index)}
                                 />
-                                <label htmlFor={level.id} className="ml-3 block text-4xl text-gray-700 cursor-pointer">
+                                <label htmlFor={level.id} className="ml-3 block text-3xl text-gray-700 cursor-pointer">
+                                    {level.title}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                </fieldset>
+            </div>
+            <div className=" flex flex-col px-8 py-5 rounded-xl mt-6 bg-gray-50 border border-gray-200">
+                <label className="text-4xl  text-gray-900">Semmantics</label>
+                <p className="text-lg leading-5 text-gray-500 mt-5">What type of word do you wish to represent? </p>
+                <fieldset className="mt-5">
+                    <div className="space-y-7">
+                        {semmantics.map((level, index) => (
+                            < div key={level.id} className="flex items-center" >
+                                <input
+                                    id={level.id}
+                                    name="level-method"
+                                    type="radio"
+                                    className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer"
+                                    disabled={isSemmanticsActive()}
+                                    onChange={() => setActiveTag(level.id)}
+                                />
+                                <label htmlFor={level.id} className="ml-3 block text-3xl text-gray-700 cursor-pointer">
                                     {level.title}
                                 </label>
                             </div>
@@ -123,7 +169,7 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
             </div>
             <div
                 onClick={handleStart}
-                className="bg-gray-50 border border-gray-200 mt-10 rounded-xl p-20 text-5xl text-center font-semibold cursor-pointer">
+                className="bg-gray-50 border border-gray-200 mt-6 rounded-xl p-10 text-5xl text-center font-semibold cursor-pointer">
                 START
             </div>
         </div >

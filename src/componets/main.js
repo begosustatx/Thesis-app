@@ -41,10 +41,42 @@ export default function Example() {
             }
         }
         else {
-            if (node.type === "tag" && node.attribs.class === "adj" && node.name === "span") {
+            if (node.type === "tag" && node.attribs.class === "adjective" && node.name === "span") {
                 return (
                     <span
-                        className="text-red-600"
+                        className="text-red-300"
+                        onMouseOver={() => play_sound(node.attribs.id)}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</span>)
+            }
+            if (node.type === "tag" && node.attribs.class === "noun" && node.name === "span") {
+                return (
+                    <span
+                        className="text-pink-300"
+                        onMouseOver={() => play_sound(node.attribs.id)}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</span>)
+            }
+            if (node.type === "tag" && node.attribs.class === "verb" && node.name === "span") {
+                return (
+                    <span
+                        className="text-green-300"
+                        onMouseOver={() => play_sound(node.attribs.id)}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</span>)
+            }
+            if (node.type === "tag" && node.attribs.class === "adverb" && node.name === "span") {
+                return (
+                    <span
+                        className="text-blue-300"
+                        onMouseOver={() => play_sound(node.attribs.id)}
+                        onMouseLeave={() => stop_sound()}
+                    > {node.children[0].data}</span>)
+            }
+            if (node.type === "tag" && node.attribs.class === "pronoun" && node.name === "span") {
+                return (
+                    <span
+                        className="text-orange-300"
                         onMouseOver={() => play_sound(node.attribs.id)}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</span>)

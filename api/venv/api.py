@@ -16,21 +16,21 @@ app = Flask(__name__)
 
 @app.route('/process_text', methods=["POST"])
 def process_text():
-    type = request.json['type']
+    level = request.json['level']
     option = request.json['option']
+    tag = request.json['tag']
     object = open_file(
-        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', type, option)
+        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', level, option, tag)
     if option == 'intonation':
         intonation_info = get_intonation()
         return {"object": object, "intonation_info": intonation_info}
+    print("OK?")
     return {"object": object}
 
 
 @app.route('/play', methods=["POST"])
 def play():
     value = request.json['value']
-    global sound_api
-    sound_api = SoundProcessor()
     sound_api.is_touching = True
     sound_api.new_func1(value)
     return {"OK": 200}
@@ -40,6 +40,8 @@ def play():
 def start_tracking():
     global tracking
     tracking = SpeedCalculator()
+    global sound_api
+    sound_api = SoundProcessor()
     tracking.calculate_speed()
     return {"OK": 200}
 

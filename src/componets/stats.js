@@ -26,7 +26,7 @@ export default function Example() {
     },
         []);
     return (
-        <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-6">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-6">
             <div className=" col-span-2 px-6 py-3 bg-gray-50 border border-gray-200  rounded-lg overflow-hidden font-light">
                 <p className="text-3xl font-light text-gray-500 truncate">Position</p>
                 <p className="mt-1 text-xl  text-gray-900">x position: {x_pos}</p>
