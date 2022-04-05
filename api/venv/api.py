@@ -8,7 +8,7 @@ from new_TP import get_intonation
 import pyautogui
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 # export FLASK_APP=api
 # flask run
@@ -24,7 +24,6 @@ def process_text():
     if option == 'intonation':
         intonation_info = get_intonation()
         return {"object": object, "intonation_info": intonation_info}
-    print("OK?")
     return {"object": object}
 
 
