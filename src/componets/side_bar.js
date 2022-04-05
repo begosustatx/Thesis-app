@@ -4,11 +4,11 @@ import { useState } from "react";
 
 export default function Example({ sethtml, setIntonation_dict, postData, setStyle }) {
 
-    const [levels, setLevels] = useState([
+    const levels = [
         { id: 'sentence', title: 'Sentence', selected: false },
         { id: 'word', title: 'Word', selected: true },
         { id: 'style', title: 'Style', selected: false },
-    ])
+    ]
 
     const [info, setInfo] = useState([
         { id: 'intonation', title: 'Intonation', selected: false, active: true },
@@ -68,22 +68,24 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
     }
 
     function handleStart() {
+        let option = ''
+        let bool = false
         let sub = info.filter(elem => elem.selected === true)
-        if (activeLev === '' || sub.length === 0) {
+        if (sub.length !== 0)
+            option = sub[0].id
+        //TODO: FIX IF WE ALLOW MORE THAN 1 
+        if (activeLev === 'style') {
+            bool = true
+        }
+        setStyle(bool)
+        if (activeLev === '' || (sub.length === 0 && !bool)) {
             alert("Please select you options")
         }
         else {
-            setStyle(false)
-            //TODO: FIX IF WE ALLOW MORE THAN 1 
-            if (activeLev === 'style') {
-                setStyle(true)
-            }
-            console.log(activeTag)
-            postData('/process_text', { level: activeLev, option: sub[0].id, tag: activeTag })
+            postData('/process_text', { level: activeLev, option: option, tag: activeTag })
                 .then(data => {
                     sethtml(data.object)
-                    if (sub[0].id === 'intonation') {
-                        console.log(data)
+                    if (option === 'intonation') {
                         setIntonation_dict(data.intonation_info)
                     }
                 });
@@ -92,7 +94,6 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
 
     function isSemanticsActive() {
         let i = info.indexOf(info.filter(elem => elem.id === 'semantics')[0])
-        console.log(!info[i].selected)
         return (!info[i].selected)
     }
 
