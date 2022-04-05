@@ -12,11 +12,11 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
 
     const [info, setInfo] = useState([
         { id: 'intonation', title: 'Intonation', selected: false, active: true },
-        { id: 'semmantics', title: 'Semmantics', selected: false, active: true },
+        { id: 'semantics', title: 'Semantics', selected: false, active: true },
         { id: 'part_speech', title: 'Part of the speech', selected: false, active: true },
     ])
 
-    const semmantics = [
+    const semantics = [
         { id: 'verb', title: 'Verb' },
         { id: 'adverb', title: 'Adverb' },
         { id: 'pronoun', title: 'Pronoun' },
@@ -90,8 +90,8 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
         }
     }
 
-    function isSemmanticsActive() {
-        let i = info.indexOf(info.filter(elem => elem.id === 'semmantics')[0])
+    function isSemanticsActive() {
+        let i = info.indexOf(info.filter(elem => elem.id === 'semantics')[0])
         console.log(!info[i].selected)
         return (!info[i].selected)
     }
@@ -145,18 +145,18 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
                 </fieldset>
             </div>
             <div className=" flex flex-col px-8 py-5 rounded-xl mt-6 bg-gray-50 border border-gray-200">
-                <label className="text-4xl  text-gray-900">Semmantics</label>
+                <label className="text-4xl  text-gray-900">Semantics</label>
                 <p className="text-lg leading-5 text-gray-500 mt-5">What type of word do you wish to represent? </p>
                 <fieldset className="mt-5">
                     <div className="space-y-7">
-                        {semmantics.map((level, index) => (
+                        {semantics.map((level, index) => (
                             < div key={level.id} className="flex items-center" >
                                 <input
                                     id={level.id}
                                     name="level-method"
                                     type="radio"
                                     className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer"
-                                    disabled={isSemmanticsActive()}
+                                    disabled={isSemanticsActive()}
                                     onChange={() => setActiveTag(level.id)}
                                 />
                                 <label htmlFor={level.id} className="ml-3 block text-3xl text-gray-700 cursor-pointer">

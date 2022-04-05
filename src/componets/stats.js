@@ -4,7 +4,7 @@ export default function Example() {
 
     const [x_pos, setX] = useState(0)
     const [y_pos, setY] = useState(0)
-    const [coord_5ms, set5MS] = useState()
+    const [speed, setSpeed] = useState()
     const [stop, setStop] = useState()
     const [playing, setPlaying] = useState();
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function Example() {
             );
             setX(temp_data.x_pos)
             setY(temp_data.y_pos)
-            set5MS(temp_data.coord_5ms)
+            setSpeed(temp_data.speed)
             if (temp_data.playing) setPlaying("TRUE")
             else setPlaying("FALSE")
             if (temp_data.stop) setStop("TRUE")
@@ -34,7 +34,7 @@ export default function Example() {
             </div>
             <div className="col-span-2  px-6 py-3 bg-gray-50 border border-gray-200 rounded-lg overflow-hidden font-light">
                 <p className="text-3xl font-light text-gray-500 truncate">Speed</p>
-                <p className="mt-1 text-xl  text-gray-900">coord per 5 ms: {coord_5ms}</p>
+                <p className="mt-1 text-xl  text-gray-900">coord per 5 ms: {speed}</p>
                 <p className="mt-1 text-xl  text-gray-900">Stop: {stop}</p>
             </div>
             <div className="col-span-2  px-6 py-3 bg-gray-50 border border-gray-200  rounded-lg overflow-hidden font-light">
