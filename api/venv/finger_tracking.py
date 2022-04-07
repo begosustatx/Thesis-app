@@ -1,5 +1,4 @@
 import time
-from numpy import char
 import pyautogui
 
 # Get some starting speed form maybe a test done before
