@@ -1,3 +1,6 @@
+'''
+TODO: FILE NOT IN USE
+
 from nrclex import NRCLex
 from bs4 import BeautifulSoup
 from playsound import playsound
@@ -8,18 +11,8 @@ nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 
-'''
-def open_file(name):
-    content = open(name, "r")
-    soup = BeautifulSoup(content, 'html.parser')
-    for script in soup(["script", "style"]):
-        script.decompose()
-    strips = list(soup.stripped_strings)
-    # get rid of the fisrt and last element cause they are part of the react code
-    strips.pop(0)
-    strips.pop(len(strips)-1)
-    return(strips)
-'''
+
+
 
 # creates an array of sentences separated by punctution
 
@@ -183,3 +176,4 @@ def sentence_processor(file_path):
     effects = map_intonation(sentence_array)
     return ((sentence_array, effects))
     # return ({"sentences": sentence_array, 'effects': effects})
+'''
