@@ -2,7 +2,6 @@ from pydub.playback import play
 import contextlib
 import wave
 from pydub import AudioSegment
-import simpleaudio as sa
 from pydub import AudioSegment, playback
 
 
