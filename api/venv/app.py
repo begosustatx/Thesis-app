@@ -19,7 +19,7 @@ def index():
     return app.send_static_file('index.html')
 
 
-@app.route('/app//process_text', methods=["POST"])
+@app.route('/process_text', methods=["POST"])
 def process_text():
     level = request.json['level']
     option = request.json['option']

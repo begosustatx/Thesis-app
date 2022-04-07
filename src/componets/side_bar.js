@@ -10,7 +10,7 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
         { id: 'style', title: 'Style', selected: false },
     ]
 
-    const [info, setInfo] = useState([
+    const [info] = useState([
         { id: 'intonation', title: 'Intonation', selected: false, active: true },
         { id: 'semantics', title: 'Semantics', selected: false, active: true },
         { id: 'part_speech', title: 'Part of the speech', selected: false, active: true },
@@ -82,7 +82,7 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
             alert("Please select you options")
         }
         else {
-            postData('/app/process_text', { level: activeLev, option: option, tag: activeTag })
+            postData('/process_text', { level: activeLev, option: option, tag: activeTag })
                 .then(data => {
                     sethtml(data.object)
                     if (option === 'intonation') {
