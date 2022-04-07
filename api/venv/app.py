@@ -1,6 +1,5 @@
+from flask import Flask, send_from_directory
 from flask import request
-from flask import Flask
-from sqlalchemy import null
 from html_parser import open_file
 from sound_processor import SoundProcessor
 from finger_tracking import SpeedCalculator
@@ -8,19 +7,31 @@ from new_TP import get_intonation
 import pyautogui
 
 
-app = Flask(__name__, static_folder='../build', static_url_path='/')
+app = Flask(__name__, static_folder='../../build', static_url_path='/')
 
-# export FLASK_APP=api
+# export FLASK_APP=app
+# $env:FLASK_APP = "api.py"
 # flask run
+
+
+@app.route("/", defaults={'path': ''})
+def serve(path):
+    return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.route('/test')
+def test():
+    return {"RES": "OK"}
 
 
 @app.route('/process_text', methods=["POST"])
 def process_text():
+    print("HEEEEEEEEEEREEEEEEEE")
     level = request.json['level']
     option = request.json['option']
     tag = request.json['tag']
     object = open_file(
-        #'/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', level, option, tag)
+        # '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', level, option, tag)
         'C:/Users/begona/Documents/GitHub/thesis-app/threePig.html', level, option, tag)
     if option == 'intonation':
         intonation_info = get_intonation()

@@ -15,7 +15,10 @@ def init(lev, tag):
     global level
     level = lev
 
-
+import nltk
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('vader_lexicon')
 def classify_words(word):
     # TODO: DECIDE PATTERNS
     if(nltk_tag == 'adjective'):
