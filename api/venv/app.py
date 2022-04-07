@@ -7,7 +7,7 @@ from new_TP import get_intonation
 import pyautogui
 
 
-app = Flask(__name__, static_folder='../build', static_url_path='/')
+app = Flask(__name__, static_folder='../../build', static_url_path='/')
 
 # export FLASK_APP=app
 # $env:FLASK_APP = "api.py"
