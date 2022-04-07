@@ -21,11 +21,12 @@ def index():
 
 @app.route('/process_text', methods=["POST"])
 def process_text():
+    print("HEEEEEEEEEEREEEEEEEE")
     level = request.json['level']
     option = request.json['option']
     tag = request.json['tag']
     object = open_file(
-        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/', level, option, tag)
+        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', level, option, tag)
     # 'C:/Users/begona/Documents/GitHub/thesis-app/threePig.html', level, option, tag)
 
     if option == 'intonation':
