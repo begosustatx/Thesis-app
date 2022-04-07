@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import request
 from html_parser import open_file
 from sound_processor import SoundProcessor
@@ -14,9 +14,9 @@ app = Flask(__name__, static_folder='../../build', static_url_path='/')
 # flask run
 
 
-@app.route('/')
-def index():
-    return app.send_static_file('index.html')
+@app.route("/", defaults={'path': ''})
+def serve(path):
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route('/test')
