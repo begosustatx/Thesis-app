@@ -82,7 +82,7 @@ export default function Example({ sethtml, setIntonation_dict, postData, setStyl
             alert("Please select you options")
         }
         else {
-            postData('/process_text', { level: activeLev, option: option, tag: activeTag })
+            postData('/app/process_text', { level: activeLev, option: option, tag: activeTag })
                 .then(data => {
                     sethtml(data.object)
                     if (option === 'intonation') {

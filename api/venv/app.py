@@ -9,7 +9,7 @@ import pyautogui
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
-# export FLASK_APP=api
+# export FLASK_APP=app
 # $env:FLASK_APP = "api.py"
 # flask run
 
@@ -19,7 +19,7 @@ def index():
     return app.send_static_file('index.html')
 
 
-@app.route('/process_text', methods=["POST"])
+@app.route('/app//process_text', methods=["POST"])
 def process_text():
     level = request.json['level']
     option = request.json['option']
