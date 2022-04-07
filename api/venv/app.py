@@ -19,6 +19,11 @@ def index():
     return app.send_static_file('index.html')
 
 
+@app.route('/test')
+def test():
+    return {"RES": "OK"}
+
+
 @app.route('/process_text', methods=["POST"])
 def process_text():
     print("HEEEEEEEEEEREEEEEEEE")
