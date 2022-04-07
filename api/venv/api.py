@@ -1,6 +1,5 @@
-from flask import request
 from flask import Flask
-from sqlalchemy import null
+from flask import request
 from html_parser import open_file
 from sound_processor import SoundProcessor
 from finger_tracking import SpeedCalculator
@@ -8,7 +7,7 @@ from new_TP import get_intonation
 import pyautogui
 
 
-app = Flask(__name__, static_folder='../../build', static_url_path='/')
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 # export FLASK_APP=api
 # flask run
