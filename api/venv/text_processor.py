@@ -1,179 +1,104 @@
-'''
-TODO: FILE NOT IN USE
-
-from nrclex import NRCLex
-from bs4 import BeautifulSoup
-from playsound import playsound
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
-nltk.download('vader_lexicon')
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import pronouncing
+from hyphen import Hyphenator
+import string
 
 
+def init(option, part_of):
+    global intonation_words
+    intonation_words = []
+    global nltk_tag
+    nltk_tag = part_of
+    global opt
+    opt = option
 
 
-# creates an array of sentences separated by punctution
-
-
-def create_sentence_array(text):
-    array = sent_tokenize(text)
-    for sentence in array:
-        # Check if the sentence contains any other punctuation characters
-        if(sentence.find('(') != -1):
-            array = add_sentence(sentence, array, '(')
-        if(sentence.find(':') != -1):
-            array = add_sentence(sentence, array, ':')
-        if(sentence.find(';') != -1):
-            array = add_sentence(sentence, array, ';')
-    return(array)
-
-# splits  the sentence on different punctuation characters not handled by nltk to be added to the array
-
-
-def get_rest_char(s, char):
-    result = []
-    if(char == '('):
-        if(s[s.find(')')+1:len(s)] != ''):
-            result.append(s[s.find(')')+1:len(s)])
-        result.append(s[s.find('('):s.find(')')+1])
-        if(s[0:s.find('(')] != ''):
-            result.append(s[0:s.find('(')])
-    else:
-        result.append(s[s.find(char)+1:len(s)])
-        result.append(s[0:s.find(char)+1])
-    return(result)
-
-# adds the new separated sentences into the original array
-
-
-def add_sentence(sentence, array, char):
-    new = get_rest_char(sentence, char)
-    index = array.index(sentence)
-    array.pop(index)
-    i = index
-    for s in new:
-        array.insert(i, s)
-    return array
-
-
-# maps each sentence to a numerical puntuation value
-def map_intonation(array):
-    sentence_map = []
-    for sentence in array:
-        punctuation = set_punctuation(sentence)
-        sentence_map.append(punctuation)
-    return(sentence_map)
-
-
-# gives a numerical value to each puntuation character
-def set_punctuation(sentence):
-    punctuation = (sentence[len(sentence)-1])
-    number_value = 0
-    if punctuation == '!':
-        number_value = 2
-    elif punctuation == '?':
-        number_value = 3
-    elif (punctuation == '.' and (sentence[len(sentence)-2]) == '.' and (sentence[len(sentence)-3]) == '.'):
-        punctuation = '...'
-        number_value = 4
-    elif punctuation == ')':
-        number_value = 5
-    elif punctuation == ':':
-        number_value = 6
-    elif punctuation == ';':
-        number_value = 7
-    elif punctuation == '.':
-        number_value = 1
-    return(number_value)
-    """
-
-def extract_sentences(array):
-    for i in range(len(array)):
-        sentence_array = create_sentence_array(array[i])
-        array.pop(i)
-        sentence_array = sentence_array[::-1]
-        for sentence in sentence_array:
-            array.insert(i, sentence)
-    return array
-    """
-
-
-def extract_sentences(sentence):
-    sentence_array = create_sentence_array(sentence)
-    return sentence_array
-
-
-def create_word_array(text):
-    res = []
-    array = nltk.word_tokenize(text)
-    for a in array:
-        res.append(a)
-    return(res)
-
-    """
-
-def create_word_array(text):
-    res = []
-    for sent in text:
-        array = nltk.word_tokenize(sent)
-        for a in array:
-            res.append(a)
-    return(res)
-    """
-
-# words with a newutral classification are dismissed
-
-
+# gives a value of an effect for a specif sentiment analysis (neg or pos)
 def classify_words(word):
     sid = SentimentIntensityAnalyzer()
     emotion = sid.polarity_scores(word)
-    result = 0
-    if (emotion['compound']) != 0.0:
-        if emotion['compound'] > 0.0 and emotion['compound'] < 0.2:
-            return 3
-        elif emotion['compound'] >= 0.2 and emotion['compound'] < 0.4:
-            return 2
-        elif emotion['compound'] >= 0.4 and emotion['compound'] < 0.6:
-            return 1
-        elif emotion['compound'] >= -0.2 and emotion['compound'] < 0.0:
-            return 4
-        elif emotion['compound'] >= -0.4 and emotion['compound'] < -0.2:
-            return 5
-        elif emotion['compound'] >= -0.6 and emotion['compound'] < -0.4:
-            return 6
+    if (emotion['compound']) == 0.0:
+        return 2
+    elif emotion['compound'] > 0:
+        return 3
+    elif emotion['compound'] < 0.0:
+        return 4
     else:
-        return 0
-
-# Filter adjetives from all the words appering from the text
+        return -1
 
 
-def get_adjectives(array):
-    effects = []
-    indexes = []
-    tuple_array = nltk.pos_tag(array)
-    for i in range(len(tuple_array)):
-        if tuple_array[i][1] == 'JJ':
-            num = classify_words(tuple_array[i][0])
-            if num != 0:
-                effects.append(num)
-                indexes.append(i)
-    return (indexes, effects)
-
-
-def word_processor(file_path):
-    # strips = open_file(file_path)
-    word_array = create_word_array(file_path)
-    (indexes, effects) = get_adjectives(word_array)
-    return (word_array, indexes, effects)
-
-
-def sentence_processor(file_path):
-    # strips = open_file(file_path)
-    # sentence_array = extract_sentences(strips)
-    sentence_array = extract_sentences(file_path)
-    effects = map_intonation(sentence_array)
-    return ((sentence_array, effects))
-    # return ({"sentences": sentence_array, 'effects': effects})
 '''
+NN	noun, singular (cat, tree)
+NNS	noun plural (desks)
+NNP	proper noun, singular (sarah)
+NNPS	proper noun, plural (indians or americans)
+
+VB	verb (ask)
+VBG	verb gerund (judging)
+VBD	verb past tense (pleaded)
+VBN	verb past participle (reunified)
+VBP	verb, present tense not 3rd person singular(wrap)
+VBZ	verb, present tense with 3rd person singular (bases)
+'''
+
+
+# checks if the tag of the given word is one of the selected ones, returns true if yes
+def check_tag(tag):
+    if 'verb' in nltk_tag and (tag == 'VB' or tag == 'VBG' or tag == 'VBD' or tag == 'VBN' or tag == 'VBP' or tag == 'VBZ'):
+        return 'verb'
+    elif 'noun' in nltk_tag and (tag == 'NN' or tag == 'NNS' or tag == 'NNO' or tag == 'NNPS'):
+        return 'noun'
+    elif 'adjective' in nltk_tag and (tag == 'JJ' or tag == 'JJR' or tag == 'JJS'):
+        return 'adjective'
+    else:
+        return ''
+
+
+# checks if the word is puctuation or an apostrophe, return true if yes
+def punct_or_apos(word):
+    return ((word in string.punctuation) or (word.find("'") > 0))
+
+
+def tag_process(data):
+    h = Hyphenator('en_US')
+    # divide the data inside a tag on an array with words
+    nltk_array = nltk.word_tokenize(data)
+    # get the nltk tag for each of the words
+    tuple_array = nltk.pos_tag(nltk_array)
+    new_data = []
+    for i in range(len(tuple_array)):
+        # if the next word is puntcuation or an apostrophe we skip it
+        if not (punct_or_apos(tuple_array[i][0])):
+            # we add an spac after the word
+            word = tuple_array[i][0] + ' '
+            if(i+1 < len(tuple_array)):
+                if punct_or_apos(tuple_array[i+1][0]):
+                    word = tuple_array[i][0] + tuple_array[i+1][0] + ' '
+            tag = check_tag(tuple_array[i][1])
+            if tag != '':
+                num = 0
+                if opt == 'intonation':
+                    tag = opt
+                    if len(h.syllables(tuple_array[i][0])) >= 2:
+                        intonation_words.append(tuple_array[i][0])
+                else:
+                    num = classify_words(tuple_array[i][0])
+                word = '<span class={} id={}> {} </span> '.format(
+                    tag, num, word)
+            new_data.append(word)
+    return ("".join(new_data))
+
+
+def get_intonation():
+    h = Hyphenator('en_US')
+    intonation_words_unique = list(dict.fromkeys(intonation_words))
+    intonation_words_dict = []
+    for word in intonation_words_unique:
+        phones_list = pronouncing.phones_for_word(word)
+        num = (pronouncing.stresses(phones_list[0]))
+        intonations = [int(x) for x in str(num)]
+        pos = intonations.index(max(intonations))
+        intonation_words_dict.append(
+            {"word": word.lower(), "array": h.syllables(word), "index": pos})
+    return(intonation_words_dict)

@@ -1,10 +1,9 @@
 from flask import request
 from flask import Flask
-from sqlalchemy import null
 from html_parser import open_file
 from sound_processor import SoundProcessor
 from finger_tracking import SpeedCalculator
-from new_TP import get_intonation
+from text_processor import get_intonation
 import pyautogui
 
 
@@ -16,13 +15,12 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/process_text', methods=["POST"])
 def process_text():
-    level = request.json['level']
     option = request.json['option']
-    tag = request.json['tag']
+    part_of = request.json['part_of']
     object = open_file(
-        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', level, option, tag)
+        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', option, part_of)
     # 'C:/Users/begona/Documents/GitHub/thesis-app/threePig.html', level, option, tag)
-    if option == 'intonation':
+    if option[0] == 'intonation':
         intonation_info = get_intonation()
         return {"object": object, "intonation_info": intonation_info}
     return {"object": object}

@@ -6,7 +6,7 @@ import SideMenu from './side_bar'
 import Scroll from './scroll_btn'
 
 export default function Example() {
-
+    const [enabled, setEnabled] = useState(false)
     const [style, setStyle] = useState(false)
     const [html, sethtml] = useState('')
     const [intonation_dict, setIntonation_dict] = useState([])
@@ -18,12 +18,12 @@ export default function Example() {
 
     useEffect(() => {
         fetch('/start_tracking').then(res => res.json()).then(data => {
-            console.log("wtf")
+            console.log("")
         });
     }, []);
 
     function transform(node) {
-        if (style) {
+        if (enabled) {
             if (node.type === "tag" && node.name === "b") {
                 return (
                     <b
@@ -61,22 +61,6 @@ export default function Example() {
                 return (
                     <span
                         className="text-green-300"
-                        onMouseOver={() => play_sound(node.attribs.id)}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</span>)
-            }
-            if (node.type === "tag" && node.attribs.class === "adverb" && node.name === "span") {
-                return (
-                    <span
-                        className="text-blue-300"
-                        onMouseOver={() => play_sound(node.attribs.id)}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</span>)
-            }
-            if (node.type === "tag" && node.attribs.class === "pronoun" && node.name === "span") {
-                return (
-                    <span
-                        className="text-orange-300"
                         onMouseOver={() => play_sound(node.attribs.id)}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</span>)
@@ -145,7 +129,7 @@ export default function Example() {
 
     return (
         <div className="grid grid-cols-4  mt-24 ">
-            <SideMenu sethtml={sethtml} setIntonation_dict={setIntonation_dict} postData={postData} setStyle={setStyle} />
+            <SideMenu sethtml={sethtml} setIntonation_dict={setIntonation_dict} postData={postData} enabled={enabled} setEnabled={setEnabled} />
             <div className="h-96	mx-auto col-span-2">
                 <Stats />
                 <div className="ml-20 mt-10 text-6xl tracking-wide leading-loose h-196 overflow-scroll">
