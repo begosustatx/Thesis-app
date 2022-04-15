@@ -1,7 +1,7 @@
 from html.parser import HTMLParser
 import codecs
 #from text_processor import sentence_processor, word_processor
-from text_processor import word_intonation_process, init, tag_process2
+from text_processor import init, tag_process2
 
 
 class MyHTMLParser(HTMLParser):
@@ -17,10 +17,7 @@ class MyHTMLParser(HTMLParser):
         self.string = self.string + ' <'+tag+'> '
 
     def handle_data(self, data):
-        '''
-        if self.option == 'intonation':
-            data = word_intonation_process(data)
-        else:'''
+
         data = tag_process2(data)
         self.string = self.string + data
 
