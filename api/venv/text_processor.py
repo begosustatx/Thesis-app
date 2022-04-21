@@ -77,7 +77,7 @@ def tag_process(data):
                     word = tuple_array[i][0] + tuple_array[i+1][0] + ' '
             tag = check_tag(tuple_array[i][1])
             if tag != '':
-                num = 0
+                num = 1
                 if opt == 'intonation':
                     tag = opt
                     if len(h.syllables(tuple_array[i][0])) >= 2:

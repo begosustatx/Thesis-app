@@ -1,7 +1,7 @@
 from html.parser import HTMLParser
 import codecs
 #from text_processor import sentence_processor, word_processor
-from text_processor import init, tag_process2
+from text_processor import init, tag_process
 
 
 class MyHTMLParser(HTMLParser):
@@ -18,7 +18,7 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
 
-        data = tag_process2(data)
+        data = tag_process(data)
         self.string = self.string + data
 
     def handle_endtag(self, tag):

@@ -20,7 +20,7 @@ def process_text():
     object = open_file(
         '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', option, part_of)
     # 'C:/Users/begona/Documents/GitHub/thesis-app/threePig.html', level, option, tag)
-    if option[0] == 'intonation':
+    if len(option) != 0 and option[0] == 'intonation':
         intonation_info = get_intonation()
         return {"object": object, "intonation_info": intonation_info}
     return {"object": object}

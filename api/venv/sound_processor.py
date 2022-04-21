@@ -6,11 +6,13 @@ from pydub import AudioSegment, playback
 
 
 class SoundProcessor:
+    # intonation v-09-12-8-30
+    # v-09-10-3-56
 
     # TODO: DECIDE THE RIGHT PATTERNS
     def __init__(self):
-        self.sounds = ['Sounds/v-09-09-8-8.wav', 'Sounds/v-09-09-8-11.wav', 'Sounds/v-09-09-8-20.wav',
-                       'Sounds/v-09-09-8-24.wav', 'Sounds/v-09-10-3-44.wav', 'Sounds/v-09-10-3-48.wav', 'Sounds/v-09-10-3-52.wav']
+        self.sounds = ['Sounds/v-10-28-7-35.wav', 'Sounds/v-09-09-8-20.wav', 'Sounds/v-09-12-8-13.wav',
+                       'Sounds/v-09-18-4-16.wav', 'Sounds/v-09-12-8-13.wav', 'Sounds/v-10-29-4-22.wav', 'Sounds/v-09-10-3-52.wav']
         self.stop_flag = False
         self.is_touching = True
 
