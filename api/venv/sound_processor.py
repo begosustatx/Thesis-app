@@ -13,10 +13,9 @@ class SoundProcessor:
         self.is_touching = True
 
     def get_sound(self, type):
-        print("TYPE:-------------------", type)
         return (AudioSegment.from_wav(self.sounds[type]))
 
-    def new_func1(self, num):
+    def play_effect(self, num):
         sound = self.get_sound(num)
         play_obj = playback._play_with_simpleaudio(sound)
         while (self.is_touching):

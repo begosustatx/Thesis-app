@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react'
 import ReactHtmlParser from "react-html-parser";
 import Stats from './stats'
 import SideMenu from './side_bar'
-import Scroll from './scroll_btn'
 
-export default function Example() {
+export default function Example({ postData }) {
     const [enabled, setEnabled] = useState(false)
     const [html, sethtml] = useState('')
     const [intonation_dict, setIntonation_dict] = useState([])
@@ -93,25 +92,6 @@ export default function Example() {
         return (intonation_dict.find(element => element.word === word.toLowerCase()));
     }
 
-    async function postData(url = '', data = {}) {
-        // Opciones por defecto estan marcadas con un *
-        const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
-    }
-
-
     function play_sound(effect_type) {
         postData('/play', { value: (effect_type) })
             .then(data => {
@@ -120,7 +100,6 @@ export default function Example() {
     }
 
     function stop_sound() {
-        console.log("OUT")
         fetch('/stop_touching').then(res => res.json()).then(data => {
             console.log(data)
         });
@@ -136,7 +115,7 @@ export default function Example() {
                     <div >{ReactHtmlParser(html, options)}</div>
                 </div >
             </div >
-            <Scroll />
+            <div className="px-16 " />
         </div>
     )
 }

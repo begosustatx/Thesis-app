@@ -5,21 +5,24 @@ from sound_processor import SoundProcessor
 from finger_tracking import SpeedCalculator
 from text_processor import get_intonation
 import pyautogui
+import json
 
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 # export FLASK_APP=api
 # flask run
-
+files_json = '{"text1": "/Users/begona/Documents/GitHub/Thesis/react-flask-app/texts/article.html", "text2":"/Users/begona/Documents/GitHub/Thesis/react-flask-app/texts/article2.html" }'
+global files 
+files = json.loads(files_json)
 
 @app.route('/process_text', methods=["POST"])
 def process_text():
     option = request.json['option']
     part_of = request.json['part_of']
+    text_opt = request.json['text_opt']
     object = open_file(
-        '/Users/begona/Documents/GitHub/Thesis/react-flask-app/threePig.html', option, part_of)
-    # 'C:/Users/begona/Documents/GitHub/thesis-app/threePig.html', level, option, tag)
+        files[text_opt], option, part_of)
     if len(option) != 0 and option[0] == 'intonation':
         intonation_info = get_intonation()
         return {"object": object, "intonation_info": intonation_info}
@@ -30,7 +33,7 @@ def process_text():
 def play():
     value = request.json['value']
     sound_api.is_touching = True
-    sound_api.new_func1(value)
+    sound_api.play_effect(value)
     return {"OK": 200}
 
 
@@ -39,7 +42,6 @@ def start_tracking():
     global tracking
     tracking = SpeedCalculator()
     global sound_api
-    print("HEEEEEREEEE------------------")
     sound_api = SoundProcessor()
     tracking.calculate_speed()
     return {"OK": 200}
@@ -56,4 +58,10 @@ def get_stats():
 @app.route('/stop_touching')
 def stop_touching():
     sound_api.is_touching = False
+    return {"OK": 200}
+
+@app.route('/haptic_test')
+def haptic_test():
+    global sound_api
+    sound_api = SoundProcessor()
     return {"OK": 200}
