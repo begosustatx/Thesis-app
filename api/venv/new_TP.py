@@ -1,3 +1,5 @@
+'''
+THIS FILE HAS BEEN DECIDED NOT USE BUT SOME OF THE FUCTIONS ARE SAVED FOR FURTURE WORK
 from ast import literal_eval
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -40,26 +42,6 @@ def classify_words(word):
         return 0
 
 
-'''
-NN	noun, singular (cat, tree)
-NNS	noun plural (desks)
-NNP	proper noun, singular (sarah)
-NNPS	proper noun, plural (indians or americans)
-
-PRP	personal pronoun (hers, herself, him, himself)
-PRP$	possessive pronoun (her, his, mine, my, our )
-
-RB	adverb (occasionally, swiftly)
-RBR	adverb, comparative (greater)
-RBS	adverb, superlative (biggest)
-
-VB	verb (ask)
-VBG	verb gerund (judging)
-VBD	verb past tense (pleaded)
-VBN	verb past participle (reunified)
-VBP	verb, present tense not 3rd person singular(wrap)
-VBZ	verb, present tense with 3rd person singular (bases)
-'''
 
 
 def check_tag(tag):
@@ -77,25 +59,6 @@ def check_tag(tag):
         return False
 
 
-'''
-def tag_process(data):
-    if(level == 'sentence'):
-        nltk_array = nltk.sent_tokenize(data)
-    else:
-        nltk_array = nltk.word_tokenize(data)
-    tuple_array = nltk.pos_tag(nltk_array)
-    new_data = []
-    length = len(tuple_array)
-    for i in range(length):
-        word = tuple_array[i][0] + ' '
-        if check_tag(tuple_array[i][1]):
-            num = classify_words(tuple_array[i][0])
-            if num != -1:
-                word = '<span class={} id={}> {} </span> '.format(
-                    nltk_tag, num, word)
-        new_data.append(word)
-    return ("".join(new_data))
-'''
 
 
 def punct_or_apos(word):
@@ -150,3 +113,4 @@ def get_intonation():
         intonation_words_dict.append(
             {"word": word.lower(), "array": h.syllables(word), "index": pos})
     return(intonation_words_dict)
+'''
