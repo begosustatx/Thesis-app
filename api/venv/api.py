@@ -39,6 +39,7 @@ def start_tracking():
     global tracking
     tracking = SpeedCalculator()
     global sound_api
+    print("HEEEEEREEEE------------------")
     sound_api = SoundProcessor()
     tracking.calculate_speed()
     return {"OK": 200}

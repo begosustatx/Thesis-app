@@ -7,7 +7,6 @@ import Scroll from './scroll_btn'
 
 export default function Example() {
     const [enabled, setEnabled] = useState(false)
-    const [style, setStyle] = useState(false)
     const [html, sethtml] = useState('')
     const [intonation_dict, setIntonation_dict] = useState([])
 
@@ -27,48 +26,15 @@ export default function Example() {
             if (node.type === "tag" && node.name === "b") {
                 return (
                     <b
-                        ONTOUCH
-                        onMouseOver={() => play_sound("0")}
+                        onMouseOver={() => play_sound("bold")}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</b>)
             }
             if (node.type === "tag" && node.name === "i") {
 
                 return (
-                    <i className="text-blue-800"
-                        onMouseOver={() => play_sound("1")}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</i>)
-            }
-            if (node.type === "tag" && node.name === "g") {
-
-                return (
-                    <i className="text-red-800"
-                        onMouseOver={() => play_sound("2")}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</i>)
-            }
-            if (node.type === "tag" && node.name === "h") {
-
-                return (
-                    <i className="text-green-800"
-                        onMouseOver={() => play_sound("3")}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</i>)
-            }
-            if (node.type === "tag" && node.name === "f") {
-
-                return (
-                    <i className="text-orange-700"
-                        onMouseOver={() => play_sound("4")}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</i>)
-            }
-            if (node.type === "tag" && node.name === "a") {
-
-                return (
-                    <i className="text-yellow-700"
-                        onMouseOver={() => play_sound("5")}
+                    <i
+                        onMouseOver={() => play_sound("italics")}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</i>)
             }
@@ -107,15 +73,16 @@ export default function Example() {
                                 index === object.index ?
                                     <span
                                         className="text-green-600"
-                                        onMouseOver={() => play_sound(1)}
+                                        onMouseOver={() => play_sound(node.attribs.id)}
                                         onMouseLeave={() => stop_sound()}
                                     >{syl}</span>
                                     :
                                     <span
                                         className="text-red-600"
                                     >{syl}</span>
-                            )}
-                        </span>)
+                            )
+                            }
+                        </span >)
             }
         }
 
@@ -145,8 +112,8 @@ export default function Example() {
     }
 
 
-    function play_sound(effect_number) {
-        postData('/play', { value: parseInt(effect_number) })
+    function play_sound(effect_type) {
+        postData('/play', { value: (effect_type) })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
             });

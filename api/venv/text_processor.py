@@ -18,12 +18,15 @@ def init(option, part_of):
 def classify_words(word):
     sid = SentimentIntensityAnalyzer()
     emotion = sid.polarity_scores(word)
+    # word is neutral
     if (emotion['compound']) == 0.0:
-        return 2
+        return 'neutral'
+    # word is positive
     elif emotion['compound'] > 0:
-        return 3
+        return 'positive'
+    # word is negative
     elif emotion['compound'] < 0.0:
-        return 4
+        return 'negative'
     else:
         return -1
 
@@ -77,15 +80,15 @@ def tag_process(data):
                     word = tuple_array[i][0] + tuple_array[i+1][0] + ' '
             tag = check_tag(tuple_array[i][1])
             if tag != '':
-                num = 1
+                # set the type to intonationnif is not, it will get overwritten
+                type = opt
                 if opt == 'intonation':
                     tag = opt
                     if len(h.syllables(tuple_array[i][0])) >= 2:
                         intonation_words.append(tuple_array[i][0])
                 else:
-                    num = classify_words(tuple_array[i][0])
-                word = '<span class={} id={}> {} </span> '.format(
-                    tag, num, word)
+                    type = classify_words(tuple_array[i][0])
+                word = '<span class={} id={}> {} </span> '.format(tag, type, word)
             new_data.append(word)
     return ("".join(new_data))
 
