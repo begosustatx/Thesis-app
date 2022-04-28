@@ -5,7 +5,7 @@ const effects = [
         source: 'bold',
         id: 0,
         current: false,
-        text: "He didn't want to work at all and he built his house out of straw.The second little pig worked a little bit harder but he was somewhat lazy too and he build built his house out of sticks."
+        text: "Our solar system is made up the sun, eight planets, more than 150 moons, as well as comets, asteroids, dwarf planets and other space rocks. Planets, asteroids and comets orbit the sun."
     },
     {
         title: 'TEXT 2',
@@ -26,10 +26,6 @@ export default function Example({ postData }) {
             console.log("")
         });
     }, []);
-
-    function handleClick(effect_type) {
-
-    }
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
