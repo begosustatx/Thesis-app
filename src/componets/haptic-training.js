@@ -2,38 +2,26 @@ import { useEffect, useState } from 'react'
 const effects = [
     {
         title: 'EFFECT 1',
-        source: 'bold',
+        source: 'test1',
         id: 0,
         current: false
     },
     {
         title: 'EFFECT 2',
-        source: 'negative',
+        source: 'test2',
         id: 1,
         current: false
     },
     {
         title: 'EFFECT 3',
-        source: 'italics',
+        source: 'test3',
         id: 2,
         current: false
     },
     {
         title: 'EFFECT 4',
-        source: 'neutral',
+        source: 'test4',
         id: 3,
-        current: false
-    },
-    {
-        title: 'EFFECT 5',
-        source: 'intonation',
-        id: 4,
-        current: false
-    },
-    {
-        title: 'EFFECT 6',
-        source: 'positive',
-        id: 5,
         current: false
     },
 ]
@@ -72,6 +60,36 @@ const test = [
             },
         ]
     },
+    {
+        title: 'TEST 3',
+        effects: [
+            {
+                title: 'EFFECT 1',
+                id: 10,
+                current: false
+            },
+            {
+                title: 'EFFECT 2',
+                id: 11,
+                current: false
+            },
+        ]
+    },
+    {
+        title: 'TEST 4',
+        effects: [
+            {
+                title: 'EFFECT 1',
+                id: 12,
+                current: false
+            },
+            {
+                title: 'EFFECT 2',
+                id: 13,
+                current: false
+            },
+        ]
+    },
 ]
 
 
@@ -86,7 +104,12 @@ export default function Example({ postData }) {
     }, []);
 
 
+    function getRandom() {
+        return Math.floor(Math.random() * 4);
+    }
+
     function play_sound(effect_type) {
+        getRandom()
         postData('/play', { value: (effect_type) })
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
@@ -117,13 +140,19 @@ export default function Example({ postData }) {
         setPlaying(!playing)
     }
 
+    function setRandomEffect(index1, index2, level) {
+        const i = getRandom();
+        const effect = effects[i].source
+        handleClick(effect, index1, index2, level)
+    }
+
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
     }
 
     return (
         <div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 mt-48 px-48 gap-x-24 gap-y-20">
+            <div className="grid grid-cols-1 sm:grid-cols-4 mt-48 px-48 gap-x-24 gap-y-20">
                 {effects.map((file, index) => (
                     <button
                         onClick={() => handleClick(file.source, index, 10, true)}
@@ -147,7 +176,7 @@ export default function Example({ postData }) {
                         <div className="grid grid-cols-2 gap-x-5 mt-10">
                             {test.effects.map((file, index2) => (
                                 <button
-                                    onClick={() => handleClick(file.source, index1, index2, false)}
+                                    onClick={() => setRandomEffect(index1, index2, false)}
                                     key={file.title}
                                     className={classNames(
                                         file.current ? 'border-indigo-900 ' : 'border-gray-300',
@@ -161,7 +190,7 @@ export default function Example({ postData }) {
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
 
     )
 }

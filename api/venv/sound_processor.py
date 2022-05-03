@@ -7,8 +7,10 @@ import json
 class SoundProcessor:
 
     def __init__(self):
-        sounds = '{ "negative":"Sounds/v-10-21-3-33-2.wav", "bold":"Sounds/v-09-11-3-21-2.wav", "italics":"Sounds/v-09-12-8-21.wav","neutral": "Sounds/v-10-21-3-39-2.wav", "intonation": "Sounds/v-09-12-8-30.wav", "positive":"Sounds/v-09-18-4-16.wav"}'
-        self.sounds = json.loads(sounds)
+        f = open('sound_map.json')
+        sounds_data = f.read()
+        self.sounds = json.loads(sounds_data)
+        print("SOOOOOUNDS::::", self.sounds)
         self.stop_flag = False
         self.is_touching = True
 
