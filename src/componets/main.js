@@ -42,7 +42,6 @@ export default function Example({ postData }) {
             if (node.type === "tag" && node.attribs.class === "adjective" && node.name === "span") {
                 return (
                     <span
-                        className="text-red-300"
                         onMouseOver={() => play_sound(node.attribs.id)}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</span>)
@@ -50,7 +49,6 @@ export default function Example({ postData }) {
             if (node.type === "tag" && node.attribs.class === "noun" && node.name === "span") {
                 return (
                     <span
-                        className="text-pink-300"
                         onMouseOver={() => play_sound(node.attribs.id)}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</span>)
@@ -58,7 +56,6 @@ export default function Example({ postData }) {
             if (node.type === "tag" && node.attribs.class === "verb" && node.name === "span") {
                 return (
                     <span
-                        className="text-green-300"
                         onMouseOver={() => play_sound(node.attribs.id)}
                         onMouseLeave={() => stop_sound()}
                     > {node.children[0].data}</span>)
@@ -71,13 +68,11 @@ export default function Example({ postData }) {
                             {object.array.map((syl, index) =>
                                 index === object.index ?
                                     <span
-                                        className="text-green-600"
                                         onMouseOver={() => play_sound(node.attribs.id)}
                                         onMouseLeave={() => stop_sound()}
                                     >{syl}</span>
                                     :
                                     <span
-                                        className="text-red-600"
                                     >{syl}</span>
                             )
                             }

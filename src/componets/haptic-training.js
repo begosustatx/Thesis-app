@@ -127,6 +127,9 @@ export default function Example({ postData }) {
     function handleClick(effect_type, index1, index2, level) {
         if (playing) {
             play_sound(effect_type)
+            if (!level) {
+                console.log("FOR: ", test[index1].title, test[index1].effects[index2].title, "EFFECT:", effect_type)
+            }
         }
         else {
             stop_sound()
@@ -155,7 +158,7 @@ export default function Example({ postData }) {
             <div className="grid grid-cols-1 sm:grid-cols-4 mt-48 px-48 gap-x-24 gap-y-20">
                 {effects.map((file, index) => (
                     <button
-                        onClick={() => handleClick(file.source, index, 10, true)}
+                        onClick={() => handleClick(file.source, index, null, true)}
                         key={file.title}
                         className={classNames(
                             file.current ? 'border-indigo-900 ' : 'border-gray-300',
