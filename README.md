@@ -2,7 +2,7 @@
 From the main project:\
 `cd api/venv/`
 
-Adjust the file path and then to run the application:\
+Adjust the file path and then to run the application:
 ## For Windows: 
 `$env FLASK_APP=api`
 `flask run`
