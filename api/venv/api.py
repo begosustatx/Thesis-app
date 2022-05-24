@@ -6,7 +6,7 @@ from finger_tracking import SpeedCalculator
 from text_processor import get_intonation
 import pyautogui
 import json
-
+import codecs
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
@@ -20,9 +20,14 @@ files = json.loads(files_json)
 def process_text():
     option = request.json['option']
     part_of = request.json['part_of']
-    text_opt = request.json['text_opt']
-    object = open_file(
-        files[text_opt], option, part_of)
+    # text_opt = request.json['text_opt']
+    text_opt = 'text2'
+    if len(option) == 0 and len(part_of) == 0:
+        text_opt = 'text1'
+    f = codecs.open(files[text_opt], 'r')
+    object = f.read()
+    if not (len(option) == 0 and len(part_of) == 0):
+        object = open_file(object, option, part_of)
     if len(option) != 0 and option[0] == 'intonation':
         intonation_info = get_intonation()
         return {"object": object, "intonation_info": intonation_info}

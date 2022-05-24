@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
+import { handelRightClick } from './AppUtility';
+
 const effects = [
     {
         title: 'TEXT 1',
         source: 'bold',
         id: 0,
         current: false,
-        text: "Our solar system is made up the sun, eight planets, more than 150 moons, as well as comets, asteroids, dwarf planets and other space rocks. Planets, asteroids and comets orbit the sun."
+        text: "Our solar system is made up of the sun, eight planets, more than 150 moons, as well as comets, asteroids, dwarf planets and other space rocks. Planets, asteroids and comets orbit the sun."
     },
     {
         title: 'TEXT 2',
@@ -22,6 +24,7 @@ export default function Example({ postData }) {
     const [text, setText] = useState("")
 
     useEffect(() => {
+        document.addEventListener('contextmenu', handelRightClick);
         fetch('/haptic_test').then(res => res.json()).then(data => {
             console.log("")
         });
@@ -32,7 +35,7 @@ export default function Example({ postData }) {
     }
 
     return (
-        <div className="mx-auto px-96 ml-40 ">
+        <div className="mx-auto px-96 ml-40 select-none">
             <div className="grid grid-cols-1 sm:grid-cols-2 mt-48 px-48 gap-x-24 gap-y-20">
                 {effects.map((file) => (
                     <button
@@ -47,12 +50,14 @@ export default function Example({ postData }) {
                     </button>
                 ))}
                 <div className="col-span-2">
-                    <div className="mt-10 text-6xl tracking-wide leading-loose h-196 overflow-scroll">
-                        <div >{text}</div>
-                    </div >
+                    <div className="">
+                        <div className="mt-10 text-6xl tracking-wide leading-loose ">
+                            <div >{text}</div>
+                        </div >
+                    </div>
                 </div >
             </div>
-        </div>
+        </div >
 
     )
 }

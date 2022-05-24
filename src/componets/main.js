@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import ReactHtmlParser from "react-html-parser";
 import Stats from './stats'
 import SideMenu from './side_bar'
+import { handelRightClick } from './AppUtility';
 
 export default function Example({ postData }) {
     const [enabled, setEnabled] = useState(false)
@@ -15,10 +16,14 @@ export default function Example({ postData }) {
     };
 
     useEffect(() => {
+        document.addEventListener('contextmenu', handelRightClick);
+
         fetch('/start_tracking').then(res => res.json()).then(data => {
             console.log("")
         });
     }, []);
+
+    const [i, setI] = useState(0)
 
     function transform(node) {
         if (enabled) {
@@ -30,7 +35,6 @@ export default function Example({ postData }) {
                     > {node.children[0].data}</b>)
             }
             if (node.type === "tag" && node.name === "i") {
-
                 return (
                     <i
                         onMouseOver={() => play_sound("italics")}
@@ -39,21 +43,7 @@ export default function Example({ postData }) {
             }
         }
         else {
-            if (node.type === "tag" && node.attribs.class === "adjective" && node.name === "span") {
-                return (
-                    <span
-                        onMouseOver={() => play_sound(node.attribs.id)}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</span>)
-            }
-            if (node.type === "tag" && node.attribs.class === "noun" && node.name === "span") {
-                return (
-                    <span
-                        onMouseOver={() => play_sound(node.attribs.id)}
-                        onMouseLeave={() => stop_sound()}
-                    > {node.children[0].data}</span>)
-            }
-            if (node.type === "tag" && node.attribs.class === "verb" && node.name === "span") {
+            if (node.type === "tag" && node.name === "span" && node.attribs.class !== "intonation") {
                 return (
                     <span
                         onMouseOver={() => play_sound(node.attribs.id)}
@@ -64,7 +54,7 @@ export default function Example({ postData }) {
                 let object = setIntonation(node.children[0].data)
                 if (object !== undefined)
                     return (
-                        <span>
+                        <span >
                             {object.array.map((syl, index) =>
                                 index === object.index ?
                                     <span
@@ -102,13 +92,16 @@ export default function Example({ postData }) {
     }
 
     return (
-        <div className="grid grid-cols-4  mt-24 ">
+        <div className="grid grid-cols-4  mt-24 select-none	">
             <SideMenu sethtml={sethtml} setIntonation_dict={setIntonation_dict} postData={postData} enabled={enabled} setEnabled={setEnabled} />
-            <div className="h-96	mx-auto col-span-2">
+            <div className="h-96 col-span-2">
                 <Stats />
-                <div className="ml-20 mt-10 text-6xl tracking-wide leading-loose h-196 overflow-scroll">
-                    <div >{ReactHtmlParser(html, options)}</div>
-                </div >
+                <div className="">
+                    {/*<div className=" mr-40 ml-24 mt-10 text-5xl leading-normal ">*/}
+                    <div className="ml-20 mt-10 text-6xl tracking-wide leading-loose  h-196 overflow-scroll">
+                        <div >{ReactHtmlParser(html, options)}</div>
+                    </div >
+                </div>
             </div >
             <div className="px-16 " />
         </div>

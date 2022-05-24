@@ -10,7 +10,6 @@ class SoundProcessor:
         f = open('sound_map.json')
         sounds_data = f.read()
         self.sounds = json.loads(sounds_data)
-        print("SOOOOOUNDS::::", self.sounds)
         self.stop_flag = False
         self.is_touching = True
 

@@ -10,7 +10,7 @@ const callouts = [
         href: '/read-test',
     },
     {
-        name: 'SOFTWARE TOOLKIT',
+        name: 'READING + HAPTICS',
         href: '/toolkit',
     },
 ]

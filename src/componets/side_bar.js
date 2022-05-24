@@ -50,16 +50,18 @@ export default function Example({ sethtml, setIntonation_dict, postData, enabled
                 semSel = ([...semSel, selected.id])
             ))
         }
+        /*
         texts.filter(elem => elem.selected === true).map(selected => (
             textOpt = ([...textOpt, selected.id])
-        ))
+        ))*/
         //Make sure that if style is not selected at least one of each options is selected
-        if (((infoSel.length === 0 || semSel.length === 0) && !enabled) || (enabled && textOpt.length === 0)) {
+        if ((infoSel.length === 0 || semSel.length === 0) && !enabled) {
             alert("Please select you options")
         }
         else {
-            postData('/process_text', { option: infoSel, part_of: semSel, text_opt: textOpt[0] })
+            postData('/process_text', { option: infoSel, part_of: semSel })
                 .then(data => {
+                    console.log(data.object)
                     sethtml(data.object)
                     if (infoSel.length !== 0 && infoSel[0] === 'intonation') {
                         setIntonation_dict(data.intonation_info)
@@ -118,31 +120,9 @@ export default function Example({ sethtml, setIntonation_dict, postData, enabled
                     </div>
                 </fieldset>
             </div>
-            <div className=" flex flex-col px-8 py-5 rounded-xl mt-6 bg-gray-50 border border-gray-200">
-                <label className="text-4xl  text-gray-900">Text examples</label>
-                <p className="text-lg leading-5 text-gray-500 mt-5">Choose between two different texts </p>
-                <fieldset className="mt-5">
-                    <div className="space-y-7">
-                        {texts.map((level, index) => (
-                            < div key={level.id} className="flex items-center" >
-                                <input
-                                    id={level.id}
-                                    name="semmantics"
-                                    type="radio"
-                                    className="focus:ring-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 cursor-pointer"
-                                    onChange={() => handleRadioChangeText(index)}
-                                />
-                                <label htmlFor={level.id} className="ml-3 block text-3xl text-gray-700 cursor-pointer">
-                                    {level.title}
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                </fieldset>
-            </div>
             <div
                 onClick={handleStart}
-                className="bg-gray-50 border border-gray-200 mt-6 rounded-xl p-10 text-5xl text-center font-semibold cursor-pointer">
+                className="bg-indigo-600 border border-gray-200 mt-6 rounded-xl p-10 text-5xl text-center font-semibold cursor-pointer text-white">
                 START
             </div>
         </div >

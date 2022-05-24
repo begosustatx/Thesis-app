@@ -169,7 +169,7 @@ export default function Example({ postData }) {
                     </button>
                 ))}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 mt-24 px-48 gap-x-24 gap-y-20">
+            {/*<div className="grid grid-cols-1 sm:grid-cols-2 mt-24 px-48 gap-x-24 gap-y-20">
                 {test.map((test, index1) => (
                     <div
                         key={test.title}
@@ -192,7 +192,7 @@ export default function Example({ postData }) {
                         </div>
                     </div>
                 ))}
-            </div>
+                                    </div>*/}
         </div >
 
     )

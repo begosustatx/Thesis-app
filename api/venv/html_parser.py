@@ -1,5 +1,4 @@
 from html.parser import HTMLParser
-import codecs
 #from text_processor import sentence_processor, word_processor
 from text_processor import init, tag_process
 
@@ -25,10 +24,8 @@ class MyHTMLParser(HTMLParser):
         self.string = self.string + ' </'+tag+'> '
 
 
-def open_file(file, option, part_of):
-    f = codecs.open(
-        file, 'r')
-    text = f.read()
+def open_file(text, option, part_of):
+
     # If both lists are empty means the style has been chosen, and no processing is needed
     if len(option) == 0 and len(part_of) == 0:
         return text
